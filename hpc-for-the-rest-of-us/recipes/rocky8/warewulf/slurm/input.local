@@ -48,9 +48,12 @@ enable_opensm="${enable_opensm:-1}"
 # total number of computes
 num_computes="${num_computes:-1}"
 
+update_slurm_nodeconfig="${update_slurm_nodeconfig:-1}"
+slurm_node_config="${slurm_node_config:-compute-1-1 Sockets=2 CoresPerSocket=12 ThreadsPerCore=2}"
+
 # regex and starting prefix that matches defined compute hostnames
-compute_regex="${compute_regex:-compute-1-*}"
-compute_prefix="${compute_prefix:-compute-}"
+compute_regex="${compute_regex:-compute*}"
+compute_prefix="${compute_prefix:-compute}"
 
 # compute hostnames
 c_name[0]=compute-1-1

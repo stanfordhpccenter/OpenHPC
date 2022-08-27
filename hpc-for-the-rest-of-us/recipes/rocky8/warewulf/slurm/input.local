@@ -62,7 +62,16 @@ c_name[0]=compute-1-1
 c_ip[0]=10.10.1.1
 
 # compute node MAC addreses for provisioning interface
-c_mac[0]=00:1a:2b:3c:4f:56
+c_mac[1]=40:F2:E9:02:48:B8
+c_mac[2]=
+c_mac[3]=
+c_mac[4]=
+c_mac[5]=
+c_mac[6]=
+c_mac[7]=
+c_mac[8]=
+c_mac[9]
+c_mac[10]=
 
 # compute node BMC addresses
 c_bmc[0]=10.2.2.2

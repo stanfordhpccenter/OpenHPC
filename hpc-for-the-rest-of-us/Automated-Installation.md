@@ -15,12 +15,12 @@ ssh root@hpcc-cluster-[C].stanford.edu
 
 3. Retrieve the recipe script:
 ```
-https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/recipe.sh
+wget https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/recipe.sh
 ```
 
 4. Retrieve the input.local file:
 ```
-https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/input.local
+wget https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/input.local
 ```
 
 5. Revise the input file to suit your cluster settings. If your cluster is hpcc-cluster-1, the following would be correct:

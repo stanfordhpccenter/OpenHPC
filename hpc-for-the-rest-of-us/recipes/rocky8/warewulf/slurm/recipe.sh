@@ -82,23 +82,10 @@ if [[ ${enable_opensm} -eq 1 ]];then
      systemctl start opensm
 fi
 
-# Optionally enable IPoIB interface on SMS
-if [[ ${enable_ipoib} -eq 1 ]];then
-     # Enable ib0
-     cp /opt/ohpc/pub/examples/network/centos/ifcfg-ib0 /etc/sysconfig/network-scripts
-     perl -pi -e "s/master_ipoib/${sms_ipoib}/" /etc/sysconfig/network-scripts/ifcfg-ib0
-     perl -pi -e "s/ipoib_netmask/${ipoib_netmask}/" /etc/sysconfig/network-scripts/ifcfg-ib0
-     echo "[main]"   >  /etc/NetworkManager/conf.d/90-dns-none.conf
-     echo "dns=none" >> /etc/NetworkManager/conf.d/90-dns-none.conf
-     systemctl start NetworkManager
-fi
-
 # -----------------------------------------------------------
 # Complete basic Warewulf setup for master node (Section 3.7)
 # -----------------------------------------------------------
 perl -pi -e "s/device = eth1/device = ${sms_eth_internal}/" /etc/warewulf/provision.conf
-ip link set dev ${sms_eth_internal} up
-ip address add ${sms_ip}/${internal_netmask} broadcast + dev ${sms_eth_internal}
 systemctl enable httpd.service
 systemctl restart httpd
 systemctl enable dhcpd.service

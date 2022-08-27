@@ -62,7 +62,26 @@ c_name[0]=compute-1-1
 c_ip[0]=10.10.1.1
 
 # compute node MAC addreses for provisioning interface
-c_mac[1]=40:F2:E9:02:48:B8
+# hpcc-cluster-1
+# c_mac[0]=40:F2:E9:02:48:B8
+# hpcc-cluster-2
+# c_mac[0]=34:40:b5:b9:40:37
+# hpcc-cluster-3
+# c_mac[0]=34:40:b5:b9:1d:3c
+# hpcc-cluster-4
+# c_mac[0]=34:40:b5:b9:7d:1b
+# hpcc-cluster-5
+# c_mac[0]=34:40:b5:b9:63:33
+# hpcc-cluster-6
+# c_mac[0]=40:F2:E9:05:40:38
+# hpcc-cluster-7
+# c_mac[0]=34:40:b5:b9:fa:b2
+# hpcc-cluster-8
+# c_mac[0]=34:40:B5:B9:63:F0
+# hpcc-cluster-9
+# c_mac[0]=34:40:b5:b9:0a:1b
+# hpcc-cluster-10
+# c_mac[0]=34:40:b5:b9:05:14
 
 # compute node BMC addresses
 c_bmc[0]=10.2.2.2

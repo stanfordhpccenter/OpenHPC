@@ -16,7 +16,7 @@ sms_name="${sms_name:-hpcc-cluster-N}"
 sms_ip="${sms_ip:-10.1.1.1}"
 
 # Internal ethernet interface on SMS
-sms_eth_internal="${sms_eth_internal:-eth1}"
+sms_eth_internal="${sms_eth_internal:-enp6s0f1}"
 
 # Subnet netmask for internal cluster network
 internal_netmask="${internal_netmask:-255.0.0.0}"
@@ -53,7 +53,7 @@ num_computes="${num_computes:-1}"
 
 # regex and starting prefix that matches defined compute hostnames
 compute_regex="${compute_regex:-compute-1-*}"
-compute_prefix="${compute_prefix:-compute-1-}"
+compute_prefix="${compute_prefix:-compute-}"
 
 # compute hostnames
 c_name[0]=compute-1-1
@@ -63,15 +63,6 @@ c_ip[0]=10.10.1.1
 
 # compute node MAC addreses for provisioning interface
 c_mac[1]=40:F2:E9:02:48:B8
-c_mac[2]=
-c_mac[3]=
-c_mac[4]=
-c_mac[5]=
-c_mac[6]=
-c_mac[7]=
-c_mac[8]=
-c_mac[9]
-c_mac[10]=
 
 # compute node BMC addresses
 c_bmc[0]=10.2.2.2

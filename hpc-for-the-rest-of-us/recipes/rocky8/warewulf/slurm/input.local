@@ -41,9 +41,6 @@ eth_provision="${eth_provision:-eth0}"
 enable_ib="${enable_ib:-1}"
 enable_opensm="${enable_opensm:-1}"
 
-update_slurm_nodeconfig="${update_slurm_nodeconfig:-1}"
-slurm_node_config="${slurm_node_config:-compute-1-1 Sockets=2 CoresPerSocket=8 ThreadsPerCore=2}"
-
 # -------------------------
 # compute node settings
 # -------------------------

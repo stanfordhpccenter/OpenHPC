@@ -63,8 +63,7 @@ perl -pi -e "s/ControlMachine=\S+/ControlMachine=${sms_name}/" /etc/slurm/slurm.
 # Update node configuration for slurm.conf
 # ----------------------------------------
 if [[ ${update_slurm_nodeconfig} -eq 1 ]];then
-     perl -pi -e "s/^NodeName=.+$/#/" /etc/slurm/slurm.conf
-     perl -pi -e "s/ Nodes=c\S+ / Nodes=compute-1-1 /" /etc/slurm/slurm.conf
+     perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
      echo -e ${slurm_node_config} >> /etc/slurm/slurm.conf
 fi
 

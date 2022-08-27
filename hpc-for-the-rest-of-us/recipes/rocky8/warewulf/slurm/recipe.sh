@@ -152,8 +152,8 @@ systemctl enable nfs-server
 
 # Update basic slurm configuration if additional computes defined
 if [ ${num_computes} -gt 4 ];then
-   perl -pi -e "s/^NodeName=(\S+)/NodeName=${compute_prefix}[1-${num_computes}]/" /etc/slurm/slurm.conf
-   perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=${compute_prefix}[1-${num_computes}]/" /etc/slurm/slurm.conf
+   perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
+   perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
 fi
 
 # -----------------------------------------
@@ -333,8 +333,6 @@ systemctl start slurmctld
 wwsh ssh compute-* systemctl start munge
 wwsh ssh compute-* systemctl start slurmd
 
-# Optionally, generate nhc config
-wwsh ssh compute-* "/usr/sbin/nhc-genconf -H '*' -c -" | dshbak -c
 useradd -m test
 wwsh file resync passwd shadow group
 sleep 2

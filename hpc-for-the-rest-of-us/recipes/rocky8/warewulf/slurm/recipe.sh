@@ -14,7 +14,7 @@
 #  corresponding sections from the companion install guide.
 # -----------------------------------------------------------------------------------------
 
-inputFile=${OHPC_INPUT_LOCAL:-/opt/ohpc/pub/doc/recipes/rocky8/input.local}
+inputFile=${OHPC_INPUT_LOCAL:-/root/input.local}
 
 if [ ! -e ${inputFile} ];then
    echo "Error: Unable to access local input file -> ${inputFile}"

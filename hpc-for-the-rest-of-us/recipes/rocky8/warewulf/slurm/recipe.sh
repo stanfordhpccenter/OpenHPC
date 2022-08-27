@@ -64,7 +64,7 @@ perl -pi -e "s/ControlMachine=\S+/ControlMachine=${sms_name}/" /etc/slurm/slurm.
 # ----------------------------------------
 if [[ ${update_slurm_nodeconfig} -eq 1 ]];then
      perl -pi -e "s/^NodeName=.+$/#/" /etc/slurm/slurm.conf
-     perl -pi -e "s/ Nodes=c\S+ / Nodes=c[1-$num_computes] /" /etc/slurm/slurm.conf
+     perl -pi -e "s/ Nodes=c\S+ / Nodes=compute-[1-$num_computes] /" /etc/slurm/slurm.conf
      echo -e ${slurm_node_config} >> /etc/slurm/slurm.conf
 fi
 
@@ -93,20 +93,6 @@ if [[ ${enable_ipoib} -eq 1 ]];then
      systemctl start NetworkManager
 fi
 
-# ----------------------------------------------------------------------
-# Optionally add Omni-Path support services on master node (Section 3.6)
-# ----------------------------------------------------------------------
-if [[ ${enable_opa} -eq 1 ]];then
-     yum -y install opa-basic-tools
-fi
-
-# Optionally enable OPA fabric manager
-if [[ ${enable_opafm} -eq 1 ]];then
-     yum -y install opa-fm
-     systemctl enable opafm
-     systemctl start opafm
-fi
-
 # -----------------------------------------------------------
 # Complete basic Warewulf setup for master node (Section 3.7)
 # -----------------------------------------------------------
@@ -118,9 +104,6 @@ systemctl restart httpd
 systemctl enable dhcpd.service
 systemctl enable tftp.socket
 systemctl start tftp.socket
-if [ ! -z ${BOS_MIRROR+x} ]; then
-     export YUM_MIRROR=${BOS_MIRROR}
-fi
 
 # -------------------------------------------------
 # Create compute image for Warewulf (Section 3.8.1)
@@ -181,11 +164,6 @@ fi
 if [[ ${enable_ib} -eq 1 ]];then
      yum -y --installroot=$CHROOT groupinstall "InfiniBand Support"
 fi
-# Add Omni-Path drivers to compute image
-if [[ ${enable_opa} -eq 1 ]];then
-     yum -y --installroot=$CHROOT install opa-basic-tools
-     yum -y --installroot=$CHROOT install libpsm2
-fi
 
 # Update memlock settings
 perl -pi -e 's/# End of file/\* soft memlock unlimited\n$&/s' /etc/security/limits.conf
@@ -196,40 +174,7 @@ perl -pi -e 's/# End of file/\* hard memlock unlimited\n$&/s' $CHROOT/etc/securi
 # Enable slurm pam module
 echo "account    required     pam_slurm.so" >> $CHROOT/etc/pam.d/sshd
 
-if [[ ${enable_beegfs_client} -eq 1 ]];then
-     wget -P /etc/yum.repos.d https://www.beegfs.io/release/beegfs_7.2.1/dists/beegfs-rhel8.repo
-     yum -y install kernel-devel gcc elfutils-libelf-devel
-     yum -y install beegfs-client beegfs-helperd beegfs-utils
-     perl -pi -e "s/^buildArgs=-j8/buildArgs=-j8 BEEGFS_OPENTK_IBVERBS=1/"  /etc/beegfs/beegfs-client-autobuild.conf
-     /opt/beegfs/sbin/beegfs-setup-client -m ${sysmgmtd_host}
-     systemctl start beegfs-helperd
-     systemctl start beegfs-client
-     wget -P $CHROOT/etc/yum.repos.d https://www.beegfs.io/release/beegfs_7.2.1/dists/beegfs-rhel8.repo
-     yum -y --installroot=$CHROOT install beegfs-client beegfs-helperd beegfs-utils
-     perl -pi -e "s/^buildEnabled=true/buildEnabled=false/" $CHROOT/etc/beegfs/beegfs-client-autobuild.conf
-     rm -f $CHROOT/var/lib/beegfs/client/force-auto-build
-     chroot $CHROOT systemctl enable beegfs-helperd beegfs-client
-     cp /etc/beegfs/beegfs-client.conf $CHROOT/etc/beegfs/beegfs-client.conf
-     echo "drivers += beegfs" >> /etc/warewulf/bootstrap.conf
-fi
-
 # Enable Optional packages
-
-if [[ ${enable_lustre_client} -eq 1 ]];then
-     # Install Lustre client on master
-     yum -y install lustre-client-ohpc
-     # Enable lustre in WW compute image
-     yum -y --installroot=$CHROOT install lustre-client-ohpc
-     mkdir $CHROOT/mnt/lustre
-     echo "${mgs_fs_name} /mnt/lustre lustre defaults,localflock,noauto,x-systemd.automount 0 0" >> $CHROOT/etc/fstab
-     # Enable o2ib for Lustre
-     echo "options lnet networks=o2ib(ib0)" >> /etc/modprobe.d/lustre.conf
-     echo "options lnet networks=o2ib(ib0)" >> $CHROOT/etc/modprobe.d/lustre.conf
-     # mount Lustre client on master
-     mkdir /mnt/lustre
-     mount -t lustre -o localflock ${mgs_fs_name} /mnt/lustre
-fi
-
 
 # -------------------------------------------------------
 # Configure rsyslog on SMS and computes (Section 3.8.4.7)
@@ -245,80 +190,12 @@ perl -pi -e "s/^mail/\\#mail/" $CHROOT/etc/rsyslog.conf
 perl -pi -e "s/^cron/\\#cron/" $CHROOT/etc/rsyslog.conf
 perl -pi -e "s/^uucp/\\#uucp/" $CHROOT/etc/rsyslog.conf
 
-# ------------------------------------------------------
-# Configure Nagios on SMS and computes (Section 3.8.4.8)
-# ------------------------------------------------------
-if [[ ${enable_nagios} -eq 1 ]];then
-     # Install Nagios on master and vnfs image
-     yum -y install --skip-broken nagios nrpe nagios-plugins-*
-     yum -y --installroot=$CHROOT install nrpe nagios-plugins-ssh
-     chroot $CHROOT systemctl enable nrpe
-     perl -pi -e "s/^allowed_hosts=/# allowed_hosts=/" $CHROOT/etc/nagios/nrpe.cfg
-     echo "nrpe : ${sms_ip}  : ALLOW"    >> $CHROOT/etc/hosts.allow
-     echo "nrpe : ALL : DENY"            >> $CHROOT/etc/hosts.allow
-     cp /opt/ohpc/pub/examples/nagios/compute.cfg /etc/nagios/objects
-     echo "cfg_file=/etc/nagios/objects/compute.cfg" >> /etc/nagios/nagios.cfg
-     perl -pi -e "s/ \/bin\/mail/ \/usr\/bin\/mailx/g" /etc/nagios/objects/commands.cfg
-     perl -pi -e "s/nagios\@localhost/root\@${sms_name}/" /etc/nagios/objects/contacts.cfg
-     echo command[check_ssh]=/usr/lib64/nagios/plugins/check_ssh localhost $CHROOT/etc/nagios/nrpe.cfg
-     htpasswd -bc /etc/nagios/passwd nagiosadmin ${nagios_web_password}
-     systemctl enable nagios
-     systemctl start nagios
-     chmod u+s `which ping`
-fi
-
-if [[ ${enable_clustershell} -eq 1 ]];then
-     # Install clustershell
-     yum -y install clustershell
-     cd /etc/clustershell/groups.d
-     mv local.cfg local.cfg.orig
-     echo "adm: ${sms_name}" > local.cfg
-     echo "compute: ${compute_prefix}[1-${num_computes}]" >> local.cfg
-     echo "all: @adm,@compute" >> local.cfg
-fi
-
-if [[ ${enable_genders} -eq 1 ]];then
-     # Install genders
-     yum -y install genders-ohpc
-     echo -e "${sms_name}\tsms" > /etc/genders
-     for ((i=0; i<$num_computes; i++)) ; do
-        echo -e "${c_name[$i]}\tcompute,bmc=${c_bmc[$i]}"
-     done >> /etc/genders
-fi
-
-if [[ ${enable_magpie} -eq 1 ]];then
-     # Install magpie
-     yum -y install magpie-ohpc
-fi
-
-# Optionally, enable conman and configure
-if [[ ${enable_ipmisol} -eq 1 ]];then
-     yum -y install conman-ohpc
-     for ((i=0; i<$num_computes; i++)) ; do
-        echo -n 'CONSOLE name="'${c_name[$i]}'" dev="ipmi:'${c_bmc[$i]}'" '
-        echo 'ipmiopts="'U:${bmc_username},P:${IPMI_PASSWORD:-undefined},W:solpayloadsize'"'
-     done >> /etc/conman.conf
-     systemctl enable conman
-     systemctl start conman
-fi
-
 # Optionally, enable nhc and configure
 yum -y install nhc-ohpc
 yum -y --installroot=$CHROOT install nhc-ohpc
 
 echo "HealthCheckProgram=/usr/sbin/nhc" >> /etc/slurm/slurm.conf
 echo "HealthCheckInterval=300" >> /etc/slurm/slurm.conf  # execute every five minutes
-
-# Optionally, update compute image to support geopm
-if [[ ${enable_geopm} -eq 1 ]];then
-     export kargs="${kargs} intel_pstate=disable"
-fi
-
-if [[ ${enable_geopm} -eq 1 ]];then
-     yum -y --installroot=$CHROOT install kmod-msr-safe-ohpc
-     yum -y --installroot=$CHROOT install msr-safe-ohpc
-     yum -y --installroot=$CHROOT install msr-safe-slurm-ohpc
-fi
 
 # ----------------------------
 # Import files (Section 3.8.5)
@@ -327,11 +204,6 @@ wwsh file import /etc/passwd
 wwsh file import /etc/group
 wwsh file import /etc/shadow
 wwsh file import /etc/munge/munge.key
-
-if [[ ${enable_ipoib} -eq 1 ]];then
-     wwsh file import /opt/ohpc/pub/examples/network/centos/ifcfg-ib0.ww
-     wwsh -y file set ifcfg-ib0.ww --path=/etc/sysconfig/network-scripts/ifcfg-ib0
-fi
 
 # --------------------------------------
 # Assemble bootstrap image (Section 3.9)
@@ -351,14 +223,6 @@ done
 # Add hosts to cluster (Cont.)
 wwsh -y provision set "${compute_regex}" --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network
 
-# Optionally, define IPoIB network settings (required if planning to mount Lustre over IB)
-if [[ ${enable_ipoib} -eq 1 ]];then
-     for ((i=0; i<$num_computes; i++)) ; do
-        wwsh -y node set ${c_name[$i]} -D ib0 --ipaddr=${c_ipoib[$i]} --netmask=${ipoib_netmask}
-     done
-     wwsh -y provision set "${compute_regex}" --fileadd=ifcfg-ib0.ww
-fi
-
 systemctl restart dhcpd
 wwsh pxe update
 
@@ -366,16 +230,6 @@ wwsh pxe update
 export kargs="${kargs} namespace.unpriv_enable=1"
 echo "user.max_user_namespaces=15076" >> $CHROOT/etc/sysctl.conf
 wwvnfs --chroot $CHROOT
-
-# Optionally, enable console redirection
-if [[ ${enable_ipmisol} -eq 1 ]];then
-     wwsh -y provision set "${compute_regex}" --console=ttyS1,115200
-fi
-
-# Optionally, add arguments to bootstrap kernel
-if [[ ${enable_kargs} -eq 1 ]]; then
-wwsh -y provision set "${compute_regex}" --kargs="${kargs}"
-fi
 
 # ---------------------------------
 # Boot compute nodes (Section 3.10)
@@ -476,12 +330,12 @@ systemctl enable munge
 systemctl enable slurmctld
 systemctl start munge
 systemctl start slurmctld
-pdsh -w $compute_prefix[1-4] systemctl start munge
-pdsh -w $compute_prefix[1-4] systemctl start slurmd
+wwsh ssh compute-* systemctl start munge
+wwsh ssh compute-* systemctl start slurmd
 
 # Optionally, generate nhc config
-pdsh -w c1 "/usr/sbin/nhc-genconf -H '*' -c -" | dshbak -c
+wwsh ssh compute-* "/usr/sbin/nhc-genconf -H '*' -c -" | dshbak -c
 useradd -m test
 wwsh file resync passwd shadow group
 sleep 2
-pdsh -w $compute_prefix[1-4] /warewulf/bin/wwgetfiles
+wwsh ssh compute-* /warewulf/bin/wwgetfiles

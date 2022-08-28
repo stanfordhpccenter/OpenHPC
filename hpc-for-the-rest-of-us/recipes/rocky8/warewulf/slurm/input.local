@@ -74,7 +74,7 @@ c_ip[0]=10.10.1.1
 # hpcc-cluster-7
 #c_mac[0]=34:40:b5:b9:fa:b2
 # hpcc-cluster-8
-#c_mac[0]=34:40:B5:B9:63:F0
+#c_mac[0]=34:40:b5:b9:d1:c2
 # hpcc-cluster-9
 #c_mac[0]=34:40:b5:b9:0a:1b
 # hpcc-cluster-10

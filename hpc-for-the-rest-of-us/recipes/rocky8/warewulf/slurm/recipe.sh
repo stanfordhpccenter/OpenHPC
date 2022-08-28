@@ -15,7 +15,7 @@
 # -----------------------------------------------------------------------------------------
 
 # update hosts file
-echo ${sms_ip} `hostname -s` >> /etc/hosts
+echo 10.1.1.1 `hostname -s` >> /etc/hosts
 
 inputFile=${OHPC_INPUT_LOCAL:-/root/input.local}
 

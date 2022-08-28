@@ -2,7 +2,7 @@
 
 ## Setup
 
-Import the subuid and subgid files in to the warewulf database. This allows users to create their own "sandboxes:"
+Import the subuid and subgid files in to the warewulf database.
 ```Shell
 wwsh file import /etc/subuid
 wwsh file import /etc/subgid
@@ -20,6 +20,12 @@ ssh compute-1-1 reboot
 ```
 
 ## Example: Calculating Pi
+Switch to the test user account:
+
+```
+su - test
+```
+
 Create a directory for this exercise and change into it:
 
 ```Shell

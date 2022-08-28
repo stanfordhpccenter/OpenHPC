@@ -14,6 +14,9 @@
 #  corresponding sections from the companion install guide.
 # -----------------------------------------------------------------------------------------
 
+# update hosts file
+echo 10.1.1.1 `hostname -s` >> /etc/hosts
+
 inputFile=${OHPC_INPUT_LOCAL:-/root/input.local}
 
 if [ ! -e ${inputFile} ];then

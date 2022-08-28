@@ -119,6 +119,7 @@ cp -p /etc/resolv.conf $CHROOT/etc/resolv.conf
 cp /etc/passwd /etc/group  $CHROOT/etc
 yum -y --installroot=$CHROOT install ohpc-slurm-client
 chroot $CHROOT systemctl enable munge
+chroot $CHROOT systemctl enable slurmd
 echo SLURMD_OPTIONS="--conf-server ${sms_ip}" > $CHROOT/etc/sysconfig/slurmd
 yum -y --installroot=$CHROOT install chrony
 echo "server ${sms_ip} iburst" >> $CHROOT/etc/chrony.conf

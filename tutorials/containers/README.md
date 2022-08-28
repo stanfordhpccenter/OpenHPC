@@ -1,6 +1,7 @@
 # Containers
 
 ## Setup
+The following steps are to be completed as ```root```
 
 Import the subuid and subgid files in to the warewulf database.
 ```Shell

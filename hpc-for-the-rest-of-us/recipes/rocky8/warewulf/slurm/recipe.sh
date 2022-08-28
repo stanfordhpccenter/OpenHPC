@@ -318,6 +318,7 @@ systemctl enable munge
 systemctl enable slurmctld
 systemctl start munge
 systemctl start slurmctld
+wwsh ssh compute-* service slurmd restart
 
 useradd -m test
 wwsh file resync passwd shadow group

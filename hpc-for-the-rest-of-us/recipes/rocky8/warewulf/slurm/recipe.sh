@@ -62,10 +62,12 @@ perl -pi -e "s/ControlMachine=\S+/ControlMachine=${sms_name}/" /etc/slurm/slurm.
 # ----------------------------------------
 # Update node configuration for slurm.conf
 # ----------------------------------------
-if [[ ${update_slurm_nodeconfig} -eq 1 ]];then
-     perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
-     echo -e ${slurm_node_config} >> /etc/slurm/slurm.conf
-fi
+
+# Update basic slurm configuration
+
+perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
+perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
+perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
 
 # -----------------------------------------------------------------------
 # Optionally add InfiniBand support services on master node (Section 3.5)
@@ -135,12 +137,6 @@ fi
 exportfs -a
 systemctl restart nfs-server
 systemctl enable nfs-server
-
-# Update basic slurm configuration if additional computes defined
-if [ ${num_computes} -gt 4 ];then
-   perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
-   perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
-fi
 
 # -----------------------------------------
 # Additional customizations (Section 3.8.4)

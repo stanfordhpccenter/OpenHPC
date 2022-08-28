@@ -8,22 +8,17 @@
 ssh root@hpcc-cluster-[C].stanford.edu
 ```
 
-2. Open /etc/hosts and prepend the following:
-```
-10.1.1.1  hpcc-cluster-[C].cluster hpcc-cluster-[C]
-```
-
-3. Retrieve the recipe script:
+2. Retrieve the recipe script:
 ```
 wget https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/recipe.sh
 ```
 
-4. Retrieve the input.local file:
+3. Retrieve the input.local file:
 ```
 wget https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf/slurm/input.local
 ```
 
-5. Edit the input file ```input.local``` to suit your cluster settings. If your cluster is hpcc-cluster-1, the following would be correct:
+4. Edit the input file ```input.local``` to suit your cluster settings. If your cluster is hpcc-cluster-1, the following would be correct:
 
 ```
 sms_name="${sms_name:-hpcc-cluster-1}"
@@ -35,12 +30,12 @@ Uncomment hardware address for compute node on your cluster number:
 c_mac[0]=40:F2:E9:02:48:B8
 ```
 
-6. Open access to the installation file:
+5. Open access to the installation file:
 ```
 chmod u+r+x recipe.sh
 ```
 
-7. Run the local installation, which will take a while (> 20 minutes). Alternatively, you can use nohup to ensure the installation doesn't terminate if your session accidentally ends ```nohup ./recipe.sh &```:
+6. Run the local installation, which will take a while (> 20 minutes). Alternatively, you can use nohup to ensure the installation doesn't terminate if your session accidentally ends ```nohup ./recipe.sh &```:
 ```
 nohup ./recipe.sh &
 ```
@@ -51,7 +46,7 @@ Tail nohup.out to view progress
 tail -f nohup.out
 ```
 
-8. To verify that the compute nodes have booted, you can ping their hostname, i.e:
+7. To verify that the compute nodes have booted, you can ping their hostname, i.e:
 ```ping compute-1-1```
 
 The output should resemble this:
@@ -62,7 +57,7 @@ PING compute-1-12.localdomain (10.1.12.2) 56(84) bytes of data.
 64 bytes from compute-1-1.localdomain (10.1.12.2): icmp_seq=3 ttl=64 time=0.253 ms
 ```
 
-9. Verify that Slurm is working
+8. Verify that Slurm is working
 ```
 sinfo
 ```

@@ -14,17 +14,10 @@ Append the provision command with the imported files:
 wwsh -y provision set compute-* --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
 ```
 
-Reassemble the VNFS image and import in to the warewulf database:
-```Shell
-wwvnfs --chroot=$CHROOT
-```
-
 Reboot your compute node:
 ```Shell
 ssh compute-1-1 reboot
 ```
-
----
 
 ## Example: Calculating Pi
 Create a directory for this exercise and change into it:

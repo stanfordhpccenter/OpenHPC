@@ -25,7 +25,7 @@ mac_address=40:F2:E9:02:48:B8
 chmod +x recipe.sh
 ```
 
-5. Run the local installation, which will take a while (> 20 minutes). Alternatively, you can use nohup to ensure the installation doesn't terminate if your session accidentally ends:
+5. Run the local installation, which will take a while (> 12 minutes). Alternatively, you can use nohup to ensure the installation doesn't terminate if your session accidentally ends:
 ```
 nohup ./recipe.sh &
 ```

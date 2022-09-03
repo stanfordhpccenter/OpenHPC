@@ -33,6 +33,8 @@ unzip v4.3.0rc2.zip
 
 tar -zcf /root/rpmbuild/SOURCES/warewulf-4.3.0rc2.tar.gz warewulf-4.3.0rc2
 
+
+
 cd warewulf-4.3.0rc2
 
 make config
@@ -69,7 +71,7 @@ dnf -y install gnu9-compilers-ohpc
 
 perl -pi -e "s/family \"compiler\"//" /opt/ohpc/pub/modulefiles/gnu9/9.4.0
 
-yum -y install singularity
+dnf -y install singularity
 
 dnf -y install dmidecode numactl-libs numactl-devel mlocate rpm-build wget
 
@@ -102,3 +104,95 @@ dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
 dnf -y --installroot=$CHROOT install singularity
 
 dnf -y --installroot=$CHROOT install dmidecode parted grub2 numactl chrony
+
+systemctl --root=$CHROOT enable chronyd.service
+
+perl -pi -e "s/pool 2.pool.ntp.org iburst/server 10.1.1.1/" $CHROOT/etc/chrony.conf 
+
+dnf -y --installroot=$CHROOT install lua lua-filesystem lua-posix
+
+wwctl overlay mkdir generic /etc/profile.d
+
+wwctl overlay import generic /etc/profile.d/lmod.sh
+
+wwctl overlay import generic /etc/profile.d/lmod.csh
+
+dnf -y install intel-oneapi-toolkit-release-ohpc
+
+dnf -y install intel-hpckit
+
+dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
+
+dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
+
+ssh-keygen -t rsa
+
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+
+cp --parents .ssh/authorized_keys $CHROOT/root/
+
+yum -y groupinstall "InfiniBand Support"
+
+yum -y --installroot=$CHROOT groupinstall "InfiniBand Support"
+
+perl -pi -e 's/# End of file/\* soft memlock unlimited\n$&/s' /etc/security/limits.conf
+perl -pi -e 's/# End of file/\* hard memlock unlimited\n$&/s' /etc/security/limits.conf
+perl -pi -e 's/# End of file/\* soft memlock unlimited\n$&/s' ${CHROOT}/etc/security/limits.conf
+perl -pi -e 's/# End of file/\* hard memlock unlimited\n$&/s' ${CHROOT}/etc/security/limits.conf
+
+dnf -y install pmix-ohpc
+
+dnf -y install ohpc-slurm-server
+
+dnf -y --installroot=$CHROOT install ohpc-slurm-client
+
+cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
+
+perl -pi -e "s/ControlMachine=\S+/ControlMachine=`hostname -s`/" /etc/slurm/slurm.conf
+
+perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
+
+SLURM CHANGES
+
+chroot $CHROOT systemctl enable munge
+
+chroot $CHROOT systemctl enable slurmd
+
+echo SLURMD_OPTIONS="--conf-server `hostname -s`" > $CHROOT/etc/sysconfig/slurmd
+
+cp /etc/munge/munge.key $CHROOT/etc/munge/
+
+chroot $CHROOT chown munge.munge /etc/munge/munge.key
+
+systemctl enable munge
+systemctl start munge
+systemctl enable slurmctld
+systemctl start slurmctld
+
+useradd test
+
+cp /etc/passwd /etc/group /etc/shadow $CHROOT/etc/
+
+echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
+
+ADD to $CHROOT/etc/warewulf/excludes
+/opt/*
+/home/*
+/tmp/*
+/var/log/*
+/var/run/*
+ADD
+
+wwctl container build rocky-8
+
+wwctl node add compute-1-1 -n cluster -I 10.10.1.1 -H <mac_address>
+
+wwctl node set compute-1-1 -A "quiet crashkernel=no vga=791 rootfstype=ramfs"
+
+wwctl configure --all
+
+wwctl overlay build
+
+wwctl server restart
+
+ipmitool -H 10.2.2.2 -U USERID -P PASSW0RD chassis power cycle

@@ -32,6 +32,8 @@
 # hpcc-cluster-10
 #mac_address=34:40:b5:b9:05:14
 
+date
+
 domainname cluster
 
 hostname `hostname -s`
@@ -221,3 +223,6 @@ wwctl overlay build
 wwctl server restart
 
 ipmitool -H 10.2.2.2 -U USERID -P PASSW0RD chassis power cycle
+
+date
+

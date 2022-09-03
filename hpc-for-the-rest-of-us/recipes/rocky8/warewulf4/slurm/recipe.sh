@@ -120,7 +120,7 @@ dnf -y --installroot=$CHROOT remove --oldinstallonly
 
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 
-dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
+# dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
 
 dnf -y --installroot=$CHROOT install singularity
 
@@ -138,11 +138,11 @@ wwctl overlay import generic /etc/profile.d/lmod.sh
 
 wwctl overlay import generic /etc/profile.d/lmod.csh
 
-dnf -y install intel-oneapi-toolkit-release-ohpc
+# dnf -y install intel-oneapi-toolkit-release-ohpc
 
-dnf -y install intel-hpckit
+# dnf -y install intel-hpckit
 
-dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
+# dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
 
 dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
 

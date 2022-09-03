@@ -32,7 +32,6 @@
 # hpcc-cluster-10
 #mac_address=34:40:b5:b9:05:14
 
-
 domainname cluster
 
 hostname `hostname -s`
@@ -56,8 +55,6 @@ wget https://github.com/hpcng/warewulf/archive/refs/tags/v4.3.0rc2.zip
 unzip v4.3.0rc2.zip
 
 tar -zcf /root/rpmbuild/SOURCES/warewulf-4.3.0rc2.tar.gz warewulf-4.3.0rc2
-
-
 
 cd warewulf-4.3.0rc2
 

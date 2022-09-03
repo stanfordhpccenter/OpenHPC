@@ -140,12 +140,6 @@ wwctl overlay import generic /etc/profile.d/lmod.sh
 
 wwctl overlay import generic /etc/profile.d/lmod.csh
 
-# dnf -y install intel-oneapi-toolkit-release-ohpc
-
-# dnf -y install intel-hpckit
-
-# dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
-
 dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
 
 ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N '' -C "Warewulf Cluster key" > /dev/null 2>&1
@@ -224,5 +218,10 @@ wwctl server restart
 
 ipmitool -H 10.2.2.2 -U USERID -P PASSW0RD chassis power cycle
 
-date
+dnf -y install intel-oneapi-toolkit-release-ohpc
 
+dnf -y install intel-hpckit
+
+dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
+
+date

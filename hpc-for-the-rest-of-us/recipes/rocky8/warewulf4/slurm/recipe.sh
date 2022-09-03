@@ -214,7 +214,7 @@ wwctl container build rocky-8
 
 wwctl node add compute-1-1 -n cluster -I 10.10.1.1 -H ${mac_address}
 
-wwctl node set compute-1-1 -A "quiet crashkernel=no vga=791 rootfstype=ramfs"
+wwctl node set -y compute-1-1 -A "quiet crashkernel=no vga=791 rootfstype=ramfs"
 
 wwctl configure --all
 

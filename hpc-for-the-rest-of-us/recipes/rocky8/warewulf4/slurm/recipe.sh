@@ -127,9 +127,9 @@ dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
 
 ssh-keygen -t rsa
 
-cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-cp --parents .ssh/authorized_keys $CHROOT/root/
+cp --parents ~/.ssh/authorized_keys $CHROOT/root/
 
 yum -y groupinstall "InfiniBand Support"
 

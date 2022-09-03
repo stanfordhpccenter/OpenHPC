@@ -150,9 +150,13 @@ cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
 perl -pi -e "s/ControlMachine=\S+/ControlMachine=`hostname -s`/" /etc/slurm/slurm.conf
 
-perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
+perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
 
-SLURM CHANGES
+perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
+
+perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
+
+perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
 
 chroot $CHROOT systemctl enable munge
 
@@ -175,13 +179,13 @@ cp /etc/passwd /etc/group /etc/shadow $CHROOT/etc/
 
 echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
 
-ADD to $CHROOT/etc/warewulf/excludes
+cat << EOT >> $CHROOT/etc/warewulf/excludes
 /opt/*
 /home/*
 /tmp/*
 /var/log/*
 /var/run/*
-ADD
+EOT
 
 wwctl container build rocky-8
 

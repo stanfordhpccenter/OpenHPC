@@ -148,9 +148,9 @@ wwctl overlay import generic /etc/profile.d/lmod.csh
 
 dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
 
-ssh-keygen -t rsa -f $HOME/.ssh/cluster -N '' -C "Warewulf Cluster key" > /dev/null 2>&1
+ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N '' -C "Warewulf Cluster key" > /dev/null 2>&1
 
-cat ~/.ssh/cluster.pub >> ~/.ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 cp --parents ~/.ssh/authorized_keys $CHROOT/root/
 

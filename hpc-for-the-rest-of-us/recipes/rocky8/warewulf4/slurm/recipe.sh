@@ -41,15 +41,6 @@ hostnamectl set-hostname `hostname -s`
 
 echo 10.1.1.1 `hostname -s`.cluster `hostname -s` >> /etc/hosts
 
-inputFile=${OHPC_INPUT_LOCAL:-/root/input.local}
-
-if [ ! -e ${inputFile} ];then
-   echo "Error: Unable to access local input file -> ${inputFile}"
-   exit 1
-else
-   . ${inputFile} || { echo "Error sourcing ${inputFile}"; exit 1; }
-fi
-
 dnf -y install ohpc-base
 
 dnf -y install tftp-server nfs-utils dhcp-server

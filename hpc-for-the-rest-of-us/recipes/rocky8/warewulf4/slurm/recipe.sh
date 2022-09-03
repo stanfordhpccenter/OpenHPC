@@ -122,7 +122,7 @@ dnf -y --installroot=$CHROOT remove --oldinstallonly
 
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 
-# dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
+dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
 
 dnf -y --installroot=$CHROOT install singularity
 

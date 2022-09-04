@@ -14,6 +14,8 @@
 #  corresponding sections from the companion install guide.
 # -----------------------------------------------------------------------------------------
 
+date
+
 sms_name=`hostname -s`
 sms_ip="10.1.1.1"
 ntp_server="time.stanford.edu"
@@ -337,3 +339,5 @@ useradd -m test
 wwsh file resync passwd shadow group
 sleep 2
 wwsh ssh compute-* /warewulf/bin/wwgetfiles
+
+date

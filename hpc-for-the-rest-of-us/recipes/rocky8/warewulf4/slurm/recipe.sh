@@ -201,7 +201,7 @@ systemctl start slurmctld
 
 useradd test
 
-cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/
+\cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/
 
 echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
 

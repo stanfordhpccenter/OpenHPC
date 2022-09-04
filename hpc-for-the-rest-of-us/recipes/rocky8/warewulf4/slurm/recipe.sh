@@ -105,7 +105,7 @@ dnf -y install gnu9-compilers-ohpc
 
 perl -pi -e "s/family \"compiler\"//" /opt/ohpc/pub/modulefiles/gnu9/9.4.0
 
-dnf -y install singularity
+dnf -y install singularity-ohpc
 
 dnf -y install dmidecode numactl-libs numactl-devel mlocate rpm-build wget
 
@@ -134,8 +134,6 @@ dnf -y --installroot=$CHROOT remove --oldinstallonly
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 
 dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
-
-dnf -y --installroot=$CHROOT install singularity
 
 dnf -y --installroot=$CHROOT install dmidecode parted grub2 numactl chrony
 

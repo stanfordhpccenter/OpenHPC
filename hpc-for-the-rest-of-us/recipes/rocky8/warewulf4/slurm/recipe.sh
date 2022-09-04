@@ -203,9 +203,13 @@ systemctl start slurmctld
 
 useradd test
 
-cp /etc/passwd /etc/group /etc/shadow $CHROOT/etc/
+cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/
 
 echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
+
+echo '{{Include "/etc/subuid"}}' >> /var/lib/warewulf/overlays/generic/etc/subuid.ww
+
+echo '{{Include "/etc/subgid"}}' >> /var/lib/warewulf/overlays/generic/etc/subgid.ww
 
 cat << EOT >> $CHROOT/etc/warewulf/excludes
 /opt/*

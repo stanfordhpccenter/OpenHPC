@@ -1,25 +1,5 @@
 # Containers
 
-## Setup
-The following steps are to be completed as ```root```
-
-Import the subuid and subgid files in to the warewulf database.
-```Shell
-wwsh file import /etc/subuid
-wwsh file import /etc/subgid
-```
-
-
-Append the provision command with the imported files:
-```Shell
-wwsh -y provision set compute-* --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
-```
-
-Reboot your compute node:
-```Shell
-ssh compute-1-1 reboot
-```
-
 ## Example: Calculating Pi
 Switch to the test user account:
 

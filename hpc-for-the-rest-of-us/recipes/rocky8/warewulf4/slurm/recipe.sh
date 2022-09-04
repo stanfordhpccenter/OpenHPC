@@ -221,6 +221,11 @@ cat << EOT >> $CHROOT/etc/warewulf/excludes
 /var/run/*
 EOT
 
+cat << EOT >> /root/.ssh/config
+Host *
+   StrictHostKeyChecking=no
+EOT
+
 wwctl container build rocky-8
 
 wwctl node add compute-1-1 -n cluster -I 10.10.1.1 -H ${mac_address}

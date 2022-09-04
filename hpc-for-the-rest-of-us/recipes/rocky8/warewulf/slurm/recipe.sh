@@ -20,9 +20,6 @@ sms_name=`hostname -s`
 sms_ip="10.1.1.1"
 ntp_server="time.stanford.edu"
 sms_eth_internal="enp6s0f1"
-provision_wait="${provision_wait:-180}"
-bmc_username="${bmc_username:-USERID}"
-bmc_password="${bmc_password:-PASSW0RD}"
 
 if [ $sms_name = hpcc-cluster-1 ]
 then
@@ -320,11 +317,6 @@ yum -y install ohpc-gnu9-mvapich2-parallel-libs
      yum -y install ohpc-intel-mvapich2-parallel-libs
      yum -y install ohpc-intel-openmpi4-parallel-libs
      yum -y install ohpc-intel-impi-parallel-libs
-
-# -------------------------------------------------------------
-# Allow for optional sleep to wait for provisioning to complete
-# -------------------------------------------------------------
-sleep ${provision_wait}
 
 # ------------------------------------
 # Resource Manager Startup (Section 5)

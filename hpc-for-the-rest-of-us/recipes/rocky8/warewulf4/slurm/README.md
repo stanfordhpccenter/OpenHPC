@@ -13,21 +13,10 @@ ssh root@hpcc-cluster-[C].stanford.edu
 wget https://raw.githubusercontent.com/stanfordhpccenter/OpenHPC/main/hpc-for-the-rest-of-us/recipes/rocky8/warewulf4/slurm/recipe.sh
 ```
 
-3. Edit recipe.sh, uncomment the hardware address for your cluster number. If your cluster is hpcc-cluster-1, the following would be correct:
 
+3. Run the local installation, which will take a while (> 24 minutes):
 ```
-# hpcc-cluster-1
-mac_address=40:F2:E9:02:48:B8
-```
-
-4. Update recipe.sh to allow execution:
-```
-chmod +x recipe.sh
-```
-
-5. Run the local installation, which will take a while (> 10 minutes). Alternatively, you can use nohup to ensure the installation doesn't terminate if your session accidentally ends:
-```
-nohup ./recipe.sh &
+nohup sh recipe.sh &
 ```
 
 Tail nohup.out to view progress

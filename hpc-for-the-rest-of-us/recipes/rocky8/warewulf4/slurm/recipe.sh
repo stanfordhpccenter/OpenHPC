@@ -199,6 +199,10 @@ systemctl start munge
 systemctl enable slurmctld
 systemctl start slurmctld
 
+dnf -y install opensm
+systemctl enable opensm
+systemctl start opensm
+
 useradd test
 
 \cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/

@@ -2,47 +2,48 @@
 
 date
 
-hostname_gather=`hostname -s`
+a=`hostname -s`
 
-if test "$hostname_gather" = "hpcc-cluster-1" ; then
+if [ $a = hpcc-cluster-1 ]
+then
         mac_address=40:F2:E9:02:48:B8
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-2" ; then
+elif [ $a = hpcc-cluster-2 ]
+then
         mac_address=34:40:b5:b9:40:37
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-3" ; then
+elif [ $a = hpcc-cluster-3 ]
+then
         mac_address=34:40:b5:b9:9d:8c
-fi
 
-
-if test "$hostname_gather" = "hpcc-cluster-4" ; then
+elif [ $a = hpcc-cluster-4 ]
+then
         mac_address=34:40:b5:b9:7d:1b
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-5" ; then
+elif [ $a = hpcc-cluster-5 ]
+then
         mac_address=34:40:b5:b9:63:33
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-6" ; then
+elif [ $a = hpcc-cluster-6 ]
+then
         mac_address=40:F2:E9:05:40:38
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-7" ; then
+elif [ $a = hpcc-cluster-7 ]
+then
         mac_address=34:40:b5:b9:fa:b2
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-8" ; then
+elif [ $a = hpcc-cluster-8 ]
+then
         mac_address=34:40:b5:b9:d1:c2
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-9" ; then
+elif [ $a = hpcc-cluster-9 ]
+then
         mac_address=34:40:b5:b9:0a:1b
-fi
 
-if test "$hostname_gather" = "hpcc-cluster-10" ; then
+elif [ $a = hpcc-cluster-10 ]
+then
         mac_address=34:40:b5:b9:05:14
+
 fi
 
 domainname cluster
@@ -58,7 +59,7 @@ dnf -y install ohpc-base
 dnf -y install tftp-server nfs-utils dhcp-server
 
 groupadd -r warewulf
-
+:
 dnf -y install golang rpmdevtools
 
 rpmdev-setuptree

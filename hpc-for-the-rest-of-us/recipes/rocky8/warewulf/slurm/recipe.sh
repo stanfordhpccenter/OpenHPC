@@ -14,17 +14,58 @@
 #  corresponding sections from the companion install guide.
 # -----------------------------------------------------------------------------------------
 
-# update hosts file
-echo 10.1.1.1 `hostname -s` >> /etc/hosts
+sms_name=`hostname -s`
+sms_ip="10.1.1.1"
+ntp_server="time.stanford.edu"
+sms_eth_internal="enp6s0f1"
+provision_wait="${provision_wait:-180}"
+bmc_username="${bmc_username:-USERID}"
+bmc_password="${bmc_password:-PASSW0RD}"
 
-inputFile=${OHPC_INPUT_LOCAL:-/root/input.local}
+if [ $sms_name = hpcc-cluster-1 ]
+then
+        mac_address=40:F2:E9:02:48:B8
 
-if [ ! -e ${inputFile} ];then
-   echo "Error: Unable to access local input file -> ${inputFile}"
-   exit 1
-else
-   . ${inputFile} || { echo "Error sourcing ${inputFile}"; exit 1; }
+elif [ $sms_name = hpcc-cluster-2 ]
+then
+        mac_address=34:40:b5:b9:40:37
+
+elif [ $sms_name = hpcc-cluster-3 ]
+then
+        mac_address=34:40:b5:b9:9d:8c
+
+elif [ $sms_name = hpcc-cluster-4 ]
+then
+        mac_address=34:40:b5:b9:7d:1b
+
+elif [ $sms_name = hpcc-cluster-5 ]
+then
+        mac_address=34:40:b5:b9:63:33
+
+elif [ $sms_name = hpcc-cluster-6 ]
+then
+        mac_address=40:F2:E9:05:40:38
+
+elif [ $sms_name = hpcc-cluster-7 ]
+then
+        mac_address=34:40:b5:b9:fa:b2
+
+elif [ $sms_name = hpcc-cluster-8 ]
+then
+        mac_address=34:40:b5:b9:d1:c2
+
+elif [ $sms_name = hpcc-cluster-9 ]
+then
+        mac_address=34:40:b5:b9:0a:1b
+
+elif [ $sms_name = hpcc-cluster-10 ]
+then
+        mac_address=34:40:b5:b9:05:14
+
 fi
+
+# update hosts file
+echo $sms_ip $sms_name >> /etc/hosts
 
 # ---------------------------- Begin OpenHPC Recipe ---------------------------------------
 # Commands below are extracted from an OpenHPC install guide recipe and are intended for
@@ -76,16 +117,12 @@ perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
 # -----------------------------------------------------------------------
 # Optionally add InfiniBand support services on master node (Section 3.5)
 # -----------------------------------------------------------------------
-if [[ ${enable_ib} -eq 1 ]];then
-     yum -y groupinstall "InfiniBand Support"
-fi
 
-# Optionally enable opensm subnet manager
-if [[ ${enable_opensm} -eq 1 ]];then
-     yum -y install opensm
-     systemctl enable opensm
-     systemctl start opensm
-fi
+
+yum -y groupinstall "InfiniBand Support"
+yum -y install opensm
+systemctl enable opensm
+systemctl start opensm
 
 # -----------------------------------------------------------
 # Complete basic Warewulf setup for master node (Section 3.7)
@@ -135,11 +172,11 @@ echo "${sms_ip}:/home /home nfs nfsvers=3,nodev,nosuid 0 0" >> $CHROOT/etc/fstab
 echo "${sms_ip}:/opt/ohpc/pub /opt/ohpc/pub nfs nfsvers=3,nodev 0 0" >> $CHROOT/etc/fstab
 echo "/home *(rw,no_subtree_check,fsid=10,no_root_squash)" >> /etc/exports
 echo "/opt/ohpc/pub *(ro,no_subtree_check,fsid=11)" >> /etc/exports
-if [[ ${enable_intel_packages} -eq 1 ]];then
-     mkdir /opt/intel
-     echo "/opt/intel *(ro,no_subtree_check,fsid=12)" >> /etc/exports
-     echo "${sms_ip}:/opt/intel /opt/intel nfs nfsvers=3,nodev 0 0" >> $CHROOT/etc/fstab
-fi
+
+mkdir /opt/intel
+echo "/opt/intel *(ro,no_subtree_check,fsid=12)" >> /etc/exports
+echo "${sms_ip}:/opt/intel /opt/intel nfs nfsvers=3,nodev 0 0" >> $CHROOT/etc/fstab
+
 exportfs -a
 systemctl restart nfs-server
 systemctl enable nfs-server
@@ -149,9 +186,8 @@ systemctl enable nfs-server
 # -----------------------------------------
 
 # Add IB drivers to compute image
-if [[ ${enable_ib} -eq 1 ]];then
-     yum -y --installroot=$CHROOT groupinstall "InfiniBand Support"
-fi
+
+yum -y --installroot=$CHROOT groupinstall "InfiniBand Support"
 
 # Update memlock settings
 perl -pi -e 's/# End of file/\* soft memlock unlimited\n$&/s' /etc/security/limits.conf
@@ -204,14 +240,14 @@ wwbootstrap `uname -r`
 # Assemble VNFS
 wwvnfs --chroot $CHROOT
 # Add hosts to cluster
-echo "GATEWAYDEV=${eth_provision}" > /tmp/network.$$
+echo "GATEWAYDEV=eth0" > /tmp/network.$$
 wwsh -y file import /tmp/network.$$ --name network
 wwsh -y file set network --path /etc/sysconfig/network --mode=0644 --uid=0
-for ((i=0; i<$num_computes; i++)) ; do
-   wwsh -y node new ${c_name[i]} --ipaddr=${c_ip[i]} --hwaddr=${c_mac[i]} -D ${eth_provision}
-done
+
+wwsh -y node new compute-1-1 -I 10.10.1.1 -H ${mac_address}
+
 # Add hosts to cluster (Cont.)
-wwsh -y provision set "${compute_regex}" --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
+wwsh -y provision set compute-1-1 --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
 
 systemctl restart dhcpd
 wwsh pxe update
@@ -224,9 +260,8 @@ wwvnfs --chroot $CHROOT
 # ---------------------------------
 # Boot compute nodes (Section 3.10)
 # ---------------------------------
-for ((i=0; i<${num_computes}; i++)) ; do
-   ipmitool -E -I lanplus -H ${c_bmc[$i]} -U ${bmc_username} -P ${bmc_password} chassis power reset
-done
+
+ipmitool -E -I lanplus -H 10.2.2.2 -U USERID -P PASSW0RD chassis power reset
 
 # ---------------------------------------
 # Install Development Tools (Section 4.1)
@@ -245,27 +280,14 @@ yum -y install gnu9-compilers-ohpc
 # --------------------------------
 # Install MPI Stacks (Section 4.3)
 # --------------------------------
-if [[ ${enable_mpi_defaults} -eq 1 && ${enable_pmix} -eq 0 ]];then
-     yum -y install openmpi4-gnu9-ohpc mpich-ofi-gnu9-ohpc
-elif [[ ${enable_mpi_defaults} -eq 1 && ${enable_pmix} -eq 1 ]];then
-     yum -y install openmpi4-pmix-slurm-gnu9-ohpc mpich-ofi-gnu9-ohpc
-fi
 
-if [[ ${enable_ib} -eq 1 ]];then
-     yum -y install mvapich2-gnu9-ohpc
-fi
-if [[ ${enable_opa} -eq 1 ]];then
-     yum -y install mvapich2-psm2-gnu9-ohpc
-fi
+yum -y install mvapich2-gnu9-ohpc
 
 # ---------------------------------------
 # Install Performance Tools (Section 4.4)
 # ---------------------------------------
 yum -y install ohpc-gnu9-perf-tools
 
-if [[ ${enable_geopm} -eq 1 ]];then
-     yum -y install ohpc-gnu9-geopm
-fi
 yum -y install lmod-defaults-gnu9-openmpi4-ohpc
 
 # ---------------------------------------------------
@@ -275,28 +297,18 @@ yum -y install ohpc-gnu9-serial-libs
 yum -y install ohpc-gnu9-io-libs
 yum -y install ohpc-gnu9-python-libs
 yum -y install ohpc-gnu9-runtimes
-if [[ ${enable_mpi_defaults} -eq 1 ]];then
-     yum -y install ohpc-gnu9-mpich-parallel-libs
-     yum -y install ohpc-gnu9-openmpi4-parallel-libs
-fi
-if [[ ${enable_ib} -eq 1 ]];then
-     yum -y install ohpc-gnu9-mvapich2-parallel-libs
-fi
-if [[ ${enable_opa} -eq 1 ]];then
-     yum -y install ohpc-gnu9-mvapich2-parallel-libs
-fi
+yum -y install ohpc-gnu9-mpich-parallel-libs
+yum -y install ohpc-gnu9-openmpi4-parallel-libs
+yum -y install ohpc-gnu9-mvapich2-parallel-libs
+yum -y install ohpc-gnu9-mvapich2-parallel-libs
 
 # ----------------------------------------
 # Install Intel oneAPI tools (Section 4.7)
 # ----------------------------------------
-if [[ ${enable_intel_packages} -eq 1 ]];then
      yum -y install intel-oneapi-toolkit-release-ohpc
      rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
      yum -y install intel-compilers-devel-ohpc
      yum -y install intel-mpi-devel-ohpc
-     if [[ ${enable_opa} -eq 1 ]];then
-          yum -y install mvapich2-psm2-intel-ohpc
-     fi
      yum -y install ohpc-intel-serial-libs
      yum -y install ohpc-intel-geopm
      yum -y install ohpc-intel-io-libs
@@ -306,7 +318,6 @@ if [[ ${enable_intel_packages} -eq 1 ]];then
      yum -y install ohpc-intel-mvapich2-parallel-libs
      yum -y install ohpc-intel-openmpi4-parallel-libs
      yum -y install ohpc-intel-impi-parallel-libs
-fi
 
 # -------------------------------------------------------------
 # Allow for optional sleep to wait for provisioning to complete

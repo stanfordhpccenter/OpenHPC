@@ -192,6 +192,8 @@ wwsh file import /etc/passwd
 wwsh file import /etc/group
 wwsh file import /etc/shadow
 wwsh file import /etc/munge/munge.key
+wwsh file import /etc/subuid
+wwsh file import /etc/subgid
 
 # --------------------------------------
 # Assemble bootstrap image (Section 3.9)
@@ -209,7 +211,7 @@ for ((i=0; i<$num_computes; i++)) ; do
    wwsh -y node new ${c_name[i]} --ipaddr=${c_ip[i]} --hwaddr=${c_mac[i]} -D ${eth_provision}
 done
 # Add hosts to cluster (Cont.)
-wwsh -y provision set "${compute_regex}" --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network
+wwsh -y provision set "${compute_regex}" --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
 
 systemctl restart dhcpd
 wwsh pxe update

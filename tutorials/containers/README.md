@@ -72,7 +72,7 @@ println(calc_pi(10_000))
 
 Update the file's permissions so we are able to execute it:
 ```Shell
-chmod 777 calc_pi.jl
+chmod +x calc_pi.jl
 ```
 
 Now, let's enter the container that we just built, which is essentially a virtualization of an operating system on top of our current system:

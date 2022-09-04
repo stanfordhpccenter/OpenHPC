@@ -266,10 +266,10 @@ ipmitool -E -I lanplus -H 10.2.2.2 -U USERID -P PASSW0RD chassis power reset
 # Install Development Tools (Section 4.1)
 # ---------------------------------------
 yum -y install ohpc-autotools
-yum -y install EasyBuild-ohpc
-yum -y install hwloc-ohpc
-yum -y install spack-ohpc
-yum -y install valgrind-ohpc
+# yum -y install EasyBuild-ohpc
+# yum -y install hwloc-ohpc
+# yum -y install spack-ohpc
+# yum -y install valgrind-ohpc
 
 # -------------------------------
 # Install Compilers (Section 4.2)
@@ -280,43 +280,43 @@ yum -y install gnu9-compilers-ohpc
 # Install MPI Stacks (Section 4.3)
 # --------------------------------
 
-yum -y install mvapich2-gnu9-ohpc
+# yum -y install mvapich2-gnu9-ohpc
 
 # ---------------------------------------
 # Install Performance Tools (Section 4.4)
 # ---------------------------------------
-yum -y install ohpc-gnu9-perf-tools
+# yum -y install ohpc-gnu9-perf-tools
 
-yum -y install lmod-defaults-gnu9-openmpi4-ohpc
+# yum -y install lmod-defaults-gnu9-openmpi4-ohpc
 
 # ---------------------------------------------------
 # Install 3rd Party Libraries and Tools (Section 4.6)
 # ---------------------------------------------------
-yum -y install ohpc-gnu9-serial-libs
-yum -y install ohpc-gnu9-io-libs
-yum -y install ohpc-gnu9-python-libs
-yum -y install ohpc-gnu9-runtimes
-yum -y install ohpc-gnu9-mpich-parallel-libs
-yum -y install ohpc-gnu9-openmpi4-parallel-libs
-yum -y install ohpc-gnu9-mvapich2-parallel-libs
-yum -y install ohpc-gnu9-mvapich2-parallel-libs
+# yum -y install ohpc-gnu9-serial-libs
+# yum -y install ohpc-gnu9-io-libs
+# yum -y install ohpc-gnu9-python-libs
+# yum -y install ohpc-gnu9-runtimes
+# yum -y install ohpc-gnu9-mpich-parallel-libs
+# yum -y install ohpc-gnu9-openmpi4-parallel-libs
+# yum -y install ohpc-gnu9-mvapich2-parallel-libs
+# yum -y install ohpc-gnu9-mvapich2-parallel-libs
 
 # ----------------------------------------
 # Install Intel oneAPI tools (Section 4.7)
 # ----------------------------------------
-     yum -y install intel-oneapi-toolkit-release-ohpc
-     rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
-     yum -y install intel-compilers-devel-ohpc
-     yum -y install intel-mpi-devel-ohpc
-     yum -y install ohpc-intel-serial-libs
-     yum -y install ohpc-intel-geopm
-     yum -y install ohpc-intel-io-libs
-     yum -y install ohpc-intel-perf-tools
-     yum -y install ohpc-intel-python3-libs
-     yum -y install ohpc-intel-mpich-parallel-libs
-     yum -y install ohpc-intel-mvapich2-parallel-libs
-     yum -y install ohpc-intel-openmpi4-parallel-libs
-     yum -y install ohpc-intel-impi-parallel-libs
+#     yum -y install intel-oneapi-toolkit-release-ohpc
+#     rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+#     yum -y install intel-compilers-devel-ohpc
+#     yum -y install intel-mpi-devel-ohpc
+#     yum -y install ohpc-intel-serial-libs
+#     yum -y install ohpc-intel-geopm
+#     yum -y install ohpc-intel-io-libs
+#     yum -y install ohpc-intel-perf-tools
+#     yum -y install ohpc-intel-python3-libs
+#     yum -y install ohpc-intel-mpich-parallel-libs
+#     yum -y install ohpc-intel-mvapich2-parallel-libs
+#     yum -y install ohpc-intel-openmpi4-parallel-libs
+#     yum -y install ohpc-intel-impi-parallel-libs
 
 # ------------------------------------
 # Resource Manager Startup (Section 5)

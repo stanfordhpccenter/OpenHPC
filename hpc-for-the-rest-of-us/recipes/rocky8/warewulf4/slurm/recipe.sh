@@ -45,38 +45,6 @@ if test "$hostname_gather" = "hpcc-cluster-10" ; then
         mac_address=34:40:b5:b9:05:14
 fi
 
-# Uncomment the MAC Address for your cluster compute node
-
-# hpcc-cluster-1
-#mac_address=40:F2:E9:02:48:B8
-
-# hpcc-cluster-2
-#mac_address=34:40:b5:b9:40:37
-
-# hpcc-cluster-3
-#mac_address=34:40:b5:b9:9d:8c
-
-# hpcc-cluster-4
-#mac_address=34:40:b5:b9:7d:1b
-
-# hpcc-cluster-5
-#mac_address=34:40:b5:b9:63:33
-
-# hpcc-cluster-6
-#mac_address=40:F2:E9:05:40:38
-
-# hpcc-cluster-7
-#mac_address=34:40:b5:b9:fa:b2
-
-# hpcc-cluster-8
-#mac_address=34:40:b5:b9:d1:c2
-
-# hpcc-cluster-9
-#mac_address=34:40:b5:b9:0a:1b
-
-# hpcc-cluster-10
-#mac_address=34:40:b5:b9:05:14
-
 domainname cluster
 
 hostname `hostname -s`

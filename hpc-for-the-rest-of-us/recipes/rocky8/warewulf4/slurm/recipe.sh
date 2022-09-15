@@ -64,13 +64,13 @@ dnf -y install golang rpmdevtools
 
 rpmdev-setuptree
 
-wget https://github.com/hpcng/warewulf/archive/refs/tags/v4.3.0rc2.zip
+wget https://github.com/hpcng/warewulf/archive/refs/tags/v4.3.0.zip
 
-unzip v4.3.0rc2.zip
+unzip v4.3.0.zip
 
-tar -zcf /root/rpmbuild/SOURCES/warewulf-4.3.0rc2.tar.gz warewulf-4.3.0rc2
+tar -zcf /root/rpmbuild/SOURCES/warewulf-4.3.0.tar.gz warewulf-4.3.0
 
-cd warewulf-4.3.0rc2
+cd warewulf-4.3.0
 
 make config
 
@@ -80,7 +80,7 @@ cd ..
 
 rpmbuild -bb /root/rpmbuild/SPECS/warewulf.spec
 
-dnf -y install /root/rpmbuild/RPMS/x86_64/warewulf-4.3.0rc2-1.el8.x86_64.rpm
+dnf -y install /root/rpmbuild/RPMS/x86_64/warewulf-4.3.0-1.el8.x86_64.rpm
 
 systemctl daemon-reload
 

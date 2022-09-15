@@ -208,6 +208,8 @@ useradd test
 
 perl -pi -e "s/ warewulf / /" /var/lib/warewulf/overlays/host/etc/hosts.ww
 
+perl -pi -e "s/ warewulf / /" /var/lib/warewulf/overlays/generic/etc/hosts.ww
+
 echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
 
 echo '{{Include "/etc/subuid"}}' >> /var/lib/warewulf/overlays/generic/etc/subuid.ww

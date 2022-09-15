@@ -52,8 +52,6 @@ hostname `hostname -s`
 
 hostnamectl set-hostname `hostname -s`
 
-echo 10.1.1.1 `hostname -s`.cluster `hostname -s` >> /etc/hosts
-
 dnf -y install ohpc-base
 
 dnf -y install tftp-server nfs-utils dhcp-server
@@ -207,6 +205,8 @@ systemctl start opensm
 useradd test
 
 \cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/
+
+perl -pi -e "s/ warewulf / /" /var/lib/warewulf/overlays/host/etc/hosts.ww
 
 echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
 

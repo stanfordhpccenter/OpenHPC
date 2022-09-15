@@ -59,7 +59,7 @@ dnf -y install ohpc-base
 dnf -y install tftp-server nfs-utils dhcp-server
 
 groupadd -r warewulf
-:
+
 dnf -y install golang rpmdevtools
 
 rpmdev-setuptree

@@ -46,12 +46,6 @@ then
 
 fi
 
-domainname cluster
-
-hostname `hostname -s`
-
-hostnamectl set-hostname `hostname -s`
-
 dnf -y install ohpc-base
 
 dnf -y install tftp-server nfs-utils dhcp-server
@@ -94,7 +88,7 @@ perl -pi -e "s/192.168.200.99/10.10.255.254/" /etc/warewulf/warewulf.conf
 perl -pi -e "s/mount: false/mount: true/" /etc/warewulf/warewulf.conf
 perl -pi -e "s/mount options: \"\"/mount options: defaults/" /etc/warewulf/warewulf.conf
 
-wwctl profile set -y default --netname cluster --netdev eth0 --netmask 255.240.0.0 --gateway 10.1.1.1 --type ethernet --onboot yes
+wwctl profile set -y default --netdev eth0 --netmask 255.240.0.0 --gateway 10.1.1.1 --type ethernet --onboot yes
 
 wwctl configure --all
 

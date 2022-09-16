@@ -46,6 +46,10 @@ then
 
 fi
 
+hostname `hostname -s`
+
+hostnamectl set-hostname `hostname -s`
+
 dnf -y install ohpc-base
 
 dnf -y install tftp-server nfs-utils dhcp-server

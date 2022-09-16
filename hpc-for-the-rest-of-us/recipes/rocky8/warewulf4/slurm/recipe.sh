@@ -44,6 +44,10 @@ elif [ $a = hpcc-cluster-10 ]
 then
         mac_address=34:40:b5:b9:05:14
 
+elif [ $a = hpcc-cluster-11 ]
+then
+        mac_address=34:40:b5:b9:40:9b
+
 fi
 
 hostname `hostname -s`

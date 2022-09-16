@@ -108,6 +108,8 @@ echo export CHROOT=/var/lib/warewulf/chroots/rocky-8/rootfs >> /root/.bash_profi
 
 . /root/.bash_profile
 
+wwctl container syncuser --write rocky-8
+
 dnf --installroot=$CHROOT config-manager --setopt="install_weak_deps=False" --save
 
 dnf --installroot=$CHROOT config-manager --set-enabled powertools

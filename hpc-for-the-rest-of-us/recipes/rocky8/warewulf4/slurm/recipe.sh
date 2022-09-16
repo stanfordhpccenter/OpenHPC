@@ -134,7 +134,7 @@ dnf -y --installroot=$CHROOT install dmidecode parted grub2 numactl chrony
 
 systemctl --root=$CHROOT enable chronyd.service
 
-perl -pi -e "s/pool 2.pool.ntp.org iburst/server 10.1.1.1/" $CHROOT/etc/chrony.conf 
+perl -pi -e "s/pool 2.rhel.pool.ntp.org iburst/server 10.1.1.1/" $CHROOT/etc/chrony.conf 
 
 dnf -y --installroot=$CHROOT install lua lua-filesystem lua-posix
 

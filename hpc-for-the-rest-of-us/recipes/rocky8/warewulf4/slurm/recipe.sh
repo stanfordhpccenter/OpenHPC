@@ -116,6 +116,8 @@ echo export CHROOT=/var/lib/warewulf/chroots/rocky-8/rootfs >> /root/.bash_profi
 
 . /root/.bash_profile
 
+useradd test
+
 wwctl container syncuser --write rocky-8
 
 dnf --installroot=$CHROOT config-manager --setopt="install_weak_deps=False" --save
@@ -153,12 +155,6 @@ wwctl overlay import generic /etc/profile.d/lmod.sh
 wwctl overlay import generic /etc/profile.d/lmod.csh
 
 dnf -y --installroot=$CHROOT install gcc libstdc++-devel cmake
-
-ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -N '' -C "Warewulf Cluster key" > /dev/null 2>&1
-
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-
-cp --parents ~/.ssh/authorized_keys $CHROOT/root/
 
 yum -y groupinstall "InfiniBand Support"
 
@@ -206,31 +202,12 @@ dnf -y install opensm
 systemctl enable opensm
 systemctl start opensm
 
-useradd test
-
-\cp /etc/passwd /etc/group /etc/shadow /etc/subuid /etc/subgid $CHROOT/etc/
-
-perl -pi -e "s/ warewulf / /" /var/lib/warewulf/overlays/host/etc/hosts.ww
-
-perl -pi -e "s/ warewulf / /" /var/lib/warewulf/overlays/generic/etc/hosts.ww
-
-echo '{{Include "/etc/passwd"}}' >> /var/lib/warewulf/overlays/generic/etc/passwd.ww
-
-echo '{{Include "/etc/subuid"}}' >> /var/lib/warewulf/overlays/generic/etc/subuid.ww
-
-echo '{{Include "/etc/subgid"}}' >> /var/lib/warewulf/overlays/generic/etc/subgid.ww
-
 cat << EOT >> $CHROOT/etc/warewulf/excludes
 /opt/*
 /home/*
 /tmp/*
 /var/log/*
 /var/run/*
-EOT
-
-cat << EOT >> /root/.ssh/config
-Host *
-   StrictHostKeyChecking=no
 EOT
 
 wwctl container build rocky-8

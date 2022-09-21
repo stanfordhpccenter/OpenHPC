@@ -1,4 +1,13 @@
 #!/bin/bash
+# -----------------------------------------------------------------------------------------
+#  The following installation script is based on recipes from Intel, installation
+#  guides from Warewulf, and installation processes from the Stanford HPC Center.
+#
+#  This script uses inputs that describe local hardware characteristics, desired
+#  network settings, and other customizations specific to the Stanford High 
+#  Performance Computing Center Teaching Clusters.
+#
+# -----------------------------------------------------------------------------------------
 
 date
 

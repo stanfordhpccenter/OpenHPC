@@ -63,51 +63,51 @@ then
 
 elif [ $sms_name = hpcc-cluster-11 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:40:9b
 
 elif [ $sms_name = hpcc-cluster-12 ]
 then
-        mac_address=
+        mac_address=34:40:B5:B9:64:B2
 
 elif [ $sms_name = hpcc-cluster-13 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:94:1b
 
 elif [ $sms_name = hpcc-cluster-14 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:47:67
 
 elif [ $sms_name = hpcc-cluster-15 ]
 then
-        mac_address=
+        mac_address=40:f2:e9:05:40:38
 
 elif [ $sms_name = hpcc-cluster-16 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:3e:6e
 
 elif [ $sms_name = hpcc-cluster-17 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:44:b0
 
 elif [ $sms_name = hpcc-cluster-18 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:46:fb
 
 elif [ $sms_name = hpcc-cluster-19 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:43:62
 
 elif [ $sms_name = hpcc-cluster-20 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:45:29
 
 elif [ $sms_name = hpcc-cluster-21 ]
 then
-        mac_address=
+        mac_address=34:40:b5:b9:42:8e
 
 elif [ $sms_name = hpcc-cluster-22 ]
 then
-        mac_address=
+        mac_address=34:40:B5:B9:63:5A
 
 fi
 

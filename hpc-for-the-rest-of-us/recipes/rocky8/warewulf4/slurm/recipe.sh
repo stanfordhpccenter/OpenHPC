@@ -59,7 +59,7 @@ then
 
 elif [ $a = hpcc-cluster-12 ]
 then
-        mac_address=34:40:B5:B9:64:B2
+        mac_address=34:40:b5:b9:47:4b
 
 elif [ $a = hpcc-cluster-13 ]
 then

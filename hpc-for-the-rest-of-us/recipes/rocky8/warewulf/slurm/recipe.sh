@@ -149,6 +149,8 @@ systemctl restart chronyd
 yum -y install ohpc-slurm-server
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=${sms_name}/" /etc/slurm/slurm.conf
+perl -pi -e "s/JobCompType\=jobcomp\/filetxt/\\#JobCompType\=jobcomp\/filetxt/" /etc/slurm/slurm.conf
+sed -i '59s/TaskPlugin\=task\/affinity/\#TaskPlugin\=task\/affinity/g' /etc/slurm/slurm.conf
 
 # ----------------------------------------
 # Update node configuration for slurm.conf

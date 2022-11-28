@@ -226,7 +226,7 @@ dnf -y --installroot=$CHROOT install ohpc-slurm-client
 
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
-perl -pi -e "s/ControlMachine=\S+/ControlMachine=`hostname -s`/" /etc/slurm/slurm.conf
+perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=`hostname -s`/" /etc/slurm/slurm.conf
 
 perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
 

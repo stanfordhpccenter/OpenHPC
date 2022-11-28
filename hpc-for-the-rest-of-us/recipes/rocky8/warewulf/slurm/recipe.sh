@@ -148,7 +148,7 @@ systemctl restart chronyd
 # -------------------------------------------------------------
 yum -y install ohpc-slurm-server
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
-perl -pi -e "s/ControlMachine=\S+/ControlMachine=${sms_name}/" /etc/slurm/slurm.conf
+perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=${sms_name}/" /etc/slurm/slurm.conf
 
 # ----------------------------------------
 # Update node configuration for slurm.conf

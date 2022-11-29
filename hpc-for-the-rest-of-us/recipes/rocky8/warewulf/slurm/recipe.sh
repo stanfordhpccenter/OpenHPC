@@ -272,6 +272,10 @@ yum -y --installroot=$CHROOT install nhc-ohpc
 echo "HealthCheckProgram=/usr/sbin/nhc" >> /etc/slurm/slurm.conf
 echo "HealthCheckInterval=300" >> /etc/slurm/slurm.conf  # execute every five minutes
 
+echo "# temporarily resolve cgroup freezer issue" >> /etc/slurm/slurm.conf
+echo "ProctrackType=proctrack/linuxproc" >> /etc/slurm/slurm.conf
+
+
 # ----------------------------
 # Import files (Section 3.8.5)
 # ----------------------------

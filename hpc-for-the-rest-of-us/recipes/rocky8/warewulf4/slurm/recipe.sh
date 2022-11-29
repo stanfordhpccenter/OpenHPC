@@ -245,6 +245,9 @@ chroot $CHROOT systemctl enable slurmd
 
 echo SLURMD_OPTIONS="--conf-server `hostname -s`" > $CHROOT/etc/sysconfig/slurmd
 
+echo "# temporarily resolve cgroup freezer issue" >> /etc/slurm/slurm.conf
+echo "ProctrackType=proctrack/linuxproc" >> /etc/slurm/slurm.conf
+
 cp /etc/munge/munge.key $CHROOT/etc/munge/
 
 chroot $CHROOT chown munge.munge /etc/munge/munge.key

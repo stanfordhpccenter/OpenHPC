@@ -150,6 +150,8 @@ yum -y install ohpc-slurm-server
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=${sms_name}/" /etc/slurm/slurm.conf
 
+perl -pi -e "s/ProctrackType\=proctrack\/cgroup/ProctrackType\=proctrack\/linuxproc/" /etc/slurm/slurm.conf
+
 perl -pi -e "s/JobCompType\=jobcomp\/filetxt/\\#JobCompType\=jobcomp\/filetxt/" /etc/slurm/slurm.conf
 sed -i '59s/TaskPlugin\=task\/affinity/\#TaskPlugin\=task\/affinity/g' /etc/slurm/slurm.conf
 yum -y --installroot=$CHROOT install hwloc
@@ -164,6 +166,8 @@ perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
 perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
 perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
 perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
+perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
+
 
 # -----------------------------------------------------------------------
 # Optionally add InfiniBand support services on master node (Section 3.5)
@@ -271,9 +275,6 @@ yum -y --installroot=$CHROOT install nhc-ohpc
 
 echo "HealthCheckProgram=/usr/sbin/nhc" >> /etc/slurm/slurm.conf
 echo "HealthCheckInterval=300" >> /etc/slurm/slurm.conf  # execute every five minutes
-
-echo "# temporarily resolve cgroup freezer issue" >> /etc/slurm/slurm.conf
-echo "ProctrackType=proctrack/linuxproc" >> /etc/slurm/slurm.conf
 
 
 # ----------------------------

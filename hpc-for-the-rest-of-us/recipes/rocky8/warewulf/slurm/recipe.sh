@@ -154,7 +154,6 @@ perl -pi -e "s/ProctrackType\=proctrack\/cgroup/ProctrackType\=proctrack\/linuxp
 
 perl -pi -e "s/JobCompType\=jobcomp\/filetxt/\\#JobCompType\=jobcomp\/filetxt/" /etc/slurm/slurm.conf
 sed -i '59s/TaskPlugin\=task\/affinity/\#TaskPlugin\=task\/affinity/g' /etc/slurm/slurm.conf
-yum -y --installroot=$CHROOT install hwloc
 
 # ----------------------------------------
 # Update node configuration for slurm.conf
@@ -210,6 +209,7 @@ cp -p /etc/resolv.conf $CHROOT/etc/resolv.conf
 # Add SLURM and other components to compute instance
 cp /etc/passwd /etc/group  $CHROOT/etc
 yum -y --installroot=$CHROOT install ohpc-slurm-client
+yum -y --installroot=$CHROOT install hwloc
 chroot $CHROOT systemctl enable munge
 chroot $CHROOT systemctl enable slurmd
 echo SLURMD_OPTIONS="--conf-server ${sms_ip}" > $CHROOT/etc/sysconfig/slurmd

@@ -165,8 +165,6 @@ perl -pi -e "s/^NodeName=(\S+)/NodeName=compute-1-1/" /etc/slurm/slurm.conf
 perl -pi -e "s/^PartitionName=normal Nodes=(\S+)/PartitionName=normal Nodes=compute-1-1/" /etc/slurm/slurm.conf
 perl -pi -e "s/ Nodes=c\S+ / Nodes=ALL /" /etc/slurm/slurm.conf
 perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
-perl -pi -e "s/ReturnToService=1/ReturnToService=2/" /etc/slurm/slurm.conf
-
 
 # -----------------------------------------------------------------------
 # Optionally add InfiniBand support services on master node (Section 3.5)

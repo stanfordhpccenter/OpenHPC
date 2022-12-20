@@ -23,7 +23,7 @@ There are many programs we could use to test out the configuration of containers
 
 Using the `singularity build` command, we pull Julia from Docker Hub and build it into a container for this specific system:
 ```Shell
-singularity build julia.img docker://julia
+singularity -s build julia.img docker://julia
 ```
 
 In order to verify that the build completed, run

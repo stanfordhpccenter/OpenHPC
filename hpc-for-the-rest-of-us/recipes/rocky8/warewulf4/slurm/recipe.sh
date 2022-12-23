@@ -230,7 +230,7 @@ dnf -y --installroot=$CHROOT install ohpc-slurm-client
 
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
-cp /etc/slurm/cgroup.conf.ohpc /etc/slurm/cgroup.conf
+cp /etc/slurm/cgroup.conf.example /etc/slurm/cgroup.conf
 
 perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=`hostname -s`/" /etc/slurm/slurm.conf
 

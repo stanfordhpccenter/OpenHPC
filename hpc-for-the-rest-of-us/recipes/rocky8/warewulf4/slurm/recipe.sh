@@ -157,7 +157,11 @@ dnf -y install gcc
 
 dnf -y install gnu9-compilers-ohpc
 
+dnf -y install gnu12-compilers-ohpc
+
 perl -pi -e "s/family \"compiler\"//" /opt/ohpc/pub/modulefiles/gnu9/9.4.0
+
+perl -pi -e "s/family\(\"compiler\"\)//" /opt/ohpc/pub/modulefiles/gnu12/12.2.0.lua
 
 dnf -y install singularity-ohpc
 
@@ -226,9 +230,9 @@ dnf -y --installroot=$CHROOT install ohpc-slurm-client
 
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
-perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=`hostname -s`/" /etc/slurm/slurm.conf
+cp /etc/slurm/cgroup.conf.ohpc /etc/slurm/cgroup.conf
 
-perl -pi -e "s/ProctrackType\=proctrack\/cgroup/ProctrackType\=proctrack\/linuxproc/" /etc/slurm/slurm.conf
+perl -pi -e "s/SlurmctldHost=\S+/SlurmctldHost=`hostname -s`/" /etc/slurm/slurm.conf
 
 perl -pi -e "s/JobCompType\=jobcomp\/filetxt/\\#JobCompType\=jobcomp\/filetxt/" /etc/slurm/slurm.conf
 sed -i '59s/TaskPlugin\=task\/affinity/\#TaskPlugin\=task\/affinity/g' /etc/slurm/slurm.conf

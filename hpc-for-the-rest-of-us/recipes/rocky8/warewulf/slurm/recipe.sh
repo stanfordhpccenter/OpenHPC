@@ -324,7 +324,7 @@ yum -y install ohpc-autotools
 # yum -y install hwloc-ohpc
 # yum -y install spack-ohpc
 # yum -y install valgrind-ohpc
-# yum -y install singularity-ohpc
+yum -y install singularity-ohpc
 
 # -------------------------------
 # Install Compilers (Section 4.2)

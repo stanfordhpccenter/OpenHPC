@@ -193,7 +193,7 @@ dnf -y --installroot=$CHROOT install kernel-modules
 
 dnf -y --installroot=$CHROOT remove --oldinstallonly
 
-dnf -y --installroot=$CHROOT install singularity
+dnf -y --installroot=$CHROOT install singularity-ce
 
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 

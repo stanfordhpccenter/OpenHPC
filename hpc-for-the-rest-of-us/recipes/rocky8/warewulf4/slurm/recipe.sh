@@ -163,7 +163,13 @@ perl -pi -e "s/family \"compiler\"//" /opt/ohpc/pub/modulefiles/gnu9/9.4.0
 
 perl -pi -e "s/family\(\"compiler\"\)//" /opt/ohpc/pub/modulefiles/gnu12/12.2.0.lua
 
-dnf -y install singularity-ohpc
+
+# singularity fix
+
+# dnf -y install singularity-ohpc
+
+dnf install -y https://github.com/apptainer/apptainer/releases/download/v1.1.3/apptainer-1.1.3-1.x86_64.rpm
+
 
 dnf -y install dmidecode numactl-libs numactl-devel mlocate rpm-build wget
 
@@ -192,6 +198,12 @@ dnf -y --installroot=$CHROOT update
 dnf -y --installroot=$CHROOT install kernel-modules
 
 dnf -y --installroot=$CHROOT remove --oldinstallonly
+
+
+# singularity fix
+
+dnf -y --installroot=$CHROOT install https://github.com/apptainer/apptainer/releases/download/v1.1.3/apptainer-1.1.3-1.x86_64.rpm
+
 
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 

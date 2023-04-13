@@ -33,3 +33,6 @@ yum --installroot=$CHROOT install mesa-libGLU
 wwvnfs --chroot=$CHROOT
 
 ipmitool -E -I lanplus -H 10.2.2.2 -U USERID -P PASSW0RD chassis power reset
+
+PASSWD=password
+echo $PASSWD | passwd --stdin test

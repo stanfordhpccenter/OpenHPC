@@ -28,11 +28,12 @@ ml apps/paraview/5.10.0-osmesa-MPI-Linux-Python3.9
 mpiexec pvserver
 EOL
 
-yum --installroot=$CHROOT install mesa-libGLU
+### The following items are integrated in recipe.sh for warewulf and warewulf4
+# yum --installroot=$CHROOT install mesa-libGLU
 
-wwvnfs --chroot=$CHROOT
+# wwvnfs --chroot=$CHROOT
 
-ipmitool -E -I lanplus -H 10.2.2.2 -U USERID -P PASSW0RD chassis power reset
+# ipmitool -E -I lanplus -H 10.2.2.2 -U USERID -P PASSW0RD chassis power reset
 
-PASSWD=password
-echo $PASSWD | passwd --stdin test
+# PASSWD=password
+# echo $PASSWD | passwd --stdin test

@@ -284,6 +284,13 @@ wwsh file import /etc/munge/munge.key
 wwsh file import /etc/subuid
 wwsh file import /etc/subgid
 
+# ----------------------------
+# Updates to recipe.sh for HPC for the rest of us! tutorials
+# ----------------------------
+
+# added for paraview
+yum -y --installroot=$CHROOT install mesa-libGLU
+
 # --------------------------------------
 # Assemble bootstrap image (Section 3.9)
 # --------------------------------------
@@ -387,6 +394,7 @@ systemctl start slurmctld
 wwsh ssh compute-* service slurmd restart
 
 useradd -m test
+echo password | passwd --stdin test
 wwsh file resync passwd shadow group
 sleep 2
 wwsh ssh compute-* /warewulf/bin/wwgetfiles

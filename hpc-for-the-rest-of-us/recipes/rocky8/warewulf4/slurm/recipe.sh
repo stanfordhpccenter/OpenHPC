@@ -179,6 +179,8 @@ echo export CHROOT=/var/lib/warewulf/chroots/rocky-8/rootfs >> /root/.bash_profi
 
 useradd test
 
+echo password | passwd --stdin test
+
 wwctl container syncuser --write rocky-8
 
 dnf --installroot=$CHROOT config-manager --setopt="install_weak_deps=False" --save
@@ -277,6 +279,13 @@ cat << EOT >> $CHROOT/etc/warewulf/excludes
 /var/log/*
 /var/run/*
 EOT
+
+# ----------------------------
+# Updates to recipe.sh for HPC for the rest of us! tutorials
+# ----------------------------
+
+# added for paraview
+yum -y --installroot=$CHROOT install mesa-libGLU
 
 wwctl container build rocky-8
 

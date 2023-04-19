@@ -12,6 +12,12 @@ Run the local installation, which will take a few minutes (> 1 minute):
 sh ./paraview.sh
 ```
 
+Change to the 'test' user:
+
+```
+su - test
+```
+
 Load the paraview module:
 
 ```

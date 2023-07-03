@@ -459,6 +459,10 @@ wwsh file import /etc/subgid
 # added for paraview
 yum -y --installroot=$CHROOT install mesa-libGLU
 
+# add apptainer
+
+yum -y --installroot=$CHROOT install apptainer
+
 # --------------------------------------
 # Assemble bootstrap image (Section 3.9)
 # --------------------------------------
@@ -499,7 +503,9 @@ yum -y install ohpc-autotools
 # yum -y install hwloc-ohpc
 # yum -y install spack-ohpc
 # yum -y install valgrind-ohpc
-yum -y install singularity-ohpc
+
+# add apptainer
+yum -y install apptainer
 
 # -------------------------------
 # Install Compilers (Section 4.2)

@@ -4,7 +4,5 @@
 #SBATCH --error=pi_%A_%a.err
 #SBATCH --ntasks=1
 
-# load singularity
-ml singularity
 # run the pi estimator within our container
-singularity exec julia.img julia calc_pi.jl
+apptainer exec julia.img julia calc_pi.jl

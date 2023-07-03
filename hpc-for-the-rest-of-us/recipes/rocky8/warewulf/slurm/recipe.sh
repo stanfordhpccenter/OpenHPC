@@ -231,7 +231,7 @@ then
 
 elif [ $sms_name = hpcc-cluster-53 ]
 then
-        mac_address=40:F2:E9:03:5C:FC
+        mac_address=40:f2:e9:02:5c:fc
 
 elif [ $sms_name = hpcc-cluster-54 ]
 then

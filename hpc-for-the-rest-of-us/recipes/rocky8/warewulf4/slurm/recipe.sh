@@ -11,95 +11,266 @@
 
 date
 
-a=`hostname -s`
+sms_name=`hostname -s`
+sms_ip="10.1.1.1"
+ntp_server="time.stanford.edu"
+sms_eth_internal="enp6s0f1"
 
-if [ $a = hpcc-cluster-1 ]
+if [ $sms_name = hpcc-cluster-1 ]
 then
         mac_address=40:F2:E9:02:48:B8
 
-elif [ $a = hpcc-cluster-2 ]
+elif [ $sms_name = hpcc-cluster-2 ]
 then
         mac_address=34:40:b5:b9:40:37
 
-elif [ $a = hpcc-cluster-3 ]
+elif [ $sms_name = hpcc-cluster-3 ]
 then
         mac_address=34:40:b5:b9:9d:8c
 
-elif [ $a = hpcc-cluster-4 ]
+elif [ $sms_name = hpcc-cluster-4 ]
 then
         mac_address=34:40:b5:b9:7d:1b
 
-elif [ $a = hpcc-cluster-5 ]
+elif [ $sms_name = hpcc-cluster-5 ]
 then
         mac_address=34:40:b5:b9:63:33
 
-elif [ $a = hpcc-cluster-6 ]
+elif [ $sms_name = hpcc-cluster-6 ]
 then
-        mac_address=40:F2:E9:05:40:38
+        mac_address=34:40:b5:b9:ca:f8
 
-elif [ $a = hpcc-cluster-7 ]
+elif [ $sms_name = hpcc-cluster-7 ]
 then
         mac_address=34:40:b5:b9:fa:b2
 
-elif [ $a = hpcc-cluster-8 ]
+elif [ $sms_name = hpcc-cluster-8 ]
 then
         mac_address=34:40:b5:b9:d1:c2
 
-elif [ $a = hpcc-cluster-9 ]
+elif [ $sms_name = hpcc-cluster-9 ]
 then
         mac_address=34:40:b5:b9:0a:1b
 
-elif [ $a = hpcc-cluster-10 ]
+elif [ $sms_name = hpcc-cluster-10 ]
 then
         mac_address=34:40:b5:b9:05:14
 
-elif [ $a = hpcc-cluster-11 ]
+elif [ $sms_name = hpcc-cluster-11 ]
 then
         mac_address=34:40:b5:b9:40:9b
 
-elif [ $a = hpcc-cluster-12 ]
+elif [ $sms_name = hpcc-cluster-12 ]
 then
         mac_address=34:40:b5:b9:47:4b
 
-elif [ $a = hpcc-cluster-13 ]
+elif [ $sms_name = hpcc-cluster-13 ]
 then
         mac_address=34:40:b5:b9:94:1b
 
-elif [ $a = hpcc-cluster-14 ]
+elif [ $sms_name = hpcc-cluster-14 ]
 then
         mac_address=34:40:b5:b9:47:67
 
-elif [ $a = hpcc-cluster-15 ]
+elif [ $sms_name = hpcc-cluster-15 ]
 then
         mac_address=34:40:b5:b9:0d:c7
 
-elif [ $a = hpcc-cluster-16 ]
+elif [ $sms_name = hpcc-cluster-16 ]
 then
         mac_address=34:40:b5:b9:3e:6e
 
-elif [ $a = hpcc-cluster-17 ]
+elif [ $sms_name = hpcc-cluster-17 ]
 then
         mac_address=34:40:b5:b9:44:b0
 
-elif [ $a = hpcc-cluster-18 ]
+elif [ $sms_name = hpcc-cluster-18 ]
 then
         mac_address=34:40:b5:b9:46:fb
 
-elif [ $a = hpcc-cluster-19 ]
+elif [ $sms_name = hpcc-cluster-19 ]
 then
         mac_address=34:40:b5:b9:43:62
 
-elif [ $a = hpcc-cluster-20 ]
+elif [ $sms_name = hpcc-cluster-20 ]
 then
         mac_address=34:40:b5:b9:45:29
 
-elif [ $a = hpcc-cluster-21 ]
+elif [ $sms_name = hpcc-cluster-21 ]
 then
         mac_address=34:40:b5:b9:42:8e
 
-elif [ $a = hpcc-cluster-22 ]
+elif [ $sms_name = hpcc-cluster-22 ]
 then
         mac_address=34:40:B5:B9:63:5A
+
+elif [ $sms_name = hpcc-cluster-23 ]
+then
+        mac_address=34:40:b5:b9:92:9c
+
+elif [ $sms_name = hpcc-cluster-24 ]
+then
+        mac_address=34:40:b5:b9:46:75
+
+elif [ $sms_name = hpcc-cluster-25 ]
+then
+        mac_address=34:40:b5:b9:46:b4
+
+elif [ $sms_name = hpcc-cluster-26 ]
+then
+        mac_address=34:40:b5:b9:39:9c
+
+elif [ $sms_name = hpcc-cluster-27 ]
+then
+        mac_address=34:40:b5:b9:47:2e
+
+elif [ $sms_name = hpcc-cluster-28 ]
+then
+        mac_address=34:40:b5:b9:1d:11
+
+elif [ $sms_name = hpcc-cluster-29 ]
+then
+        mac_address=34:40:b5:b9:3c:30
+
+elif [ $sms_name = hpcc-cluster-30 ]
+then
+        mac_address=34:40:b5:b9:43:b3
+
+elif [ $sms_name = hpcc-cluster-31 ]
+then
+        mac_address=40:f2:e9:02:77:e8
+
+elif [ $sms_name = hpcc-cluster-32 ]
+then
+        mac_address=34:40:b5:b9:2f:f2
+
+elif [ $sms_name = hpcc-cluster-33 ]
+then
+        mac_address=34:40:b5:b8:fb:8c
+
+elif [ $sms_name = hpcc-cluster-34 ]
+then
+        mac_address=34:40:b5:b9:3a:a7
+        
+elif [ $sms_name = hpcc-cluster-35 ]
+then
+        mac_address=34:40:b5:b9:08:e2
+
+elif [ $sms_name = hpcc-cluster-36 ]
+then
+        mac_address=34:40:b5:b9:47:99
+
+elif [ $sms_name = hpcc-cluster-37 ]
+then
+        mac_address=34:40:b5:b9:06:76
+
+elif [ $sms_name = hpcc-cluster-38 ]
+then
+        mac_address=34:40:b5:b9:05:c7
+
+elif [ $sms_name = hpcc-cluster-39 ]
+then
+        mac_address=34:40:b5:b9:0c:63
+
+elif [ $sms_name = hpcc-cluster-40 ]
+then
+        mac_address=34:40:b5:b8:fe:21
+        
+elif [ $sms_name = hpcc-cluster-41 ]
+then
+        mac_address=34:40:b5:b9:80:43
+        
+elif [ $sms_name = hpcc-cluster-42 ]
+then
+        mac_address=34:40:b5:b9:07:26
+
+elif [ $sms_name = hpcc-cluster-43 ]
+then
+        mac_address=34:40:b5:b9:94:08
+
+elif [ $sms_name = hpcc-cluster-44 ]
+then
+        mac_address=34:40:b5:b9:02:00
+
+elif [ $sms_name = hpcc-cluster-45 ]
+then
+        mac_address=34:40:b5:b9:32:d2
+        
+elif [ $sms_name = hpcc-cluster-46 ]
+then
+        mac_address=34:40:b5:b9:07:b4
+
+elif [ $sms_name = hpcc-cluster-47 ]
+then
+        mac_address=34:40:b5:b9:c3:04
+
+elif [ $sms_name = hpcc-cluster-48 ]
+then
+        mac_address=34:40:b5:b9:94:41
+
+elif [ $sms_name = hpcc-cluster-49 ]
+then
+        mac_address=34:40:b5:b9:5a:5a
+        
+elif [ $sms_name = hpcc-cluster-50 ]
+then
+        mac_address=34:40:b5:b9:65:FA
+
+elif [ $sms_name = hpcc-cluster-51 ]
+then
+        mac_address=34:40:b5:ba:1e:07
+
+elif [ $sms_name = hpcc-cluster-52 ]
+then
+        mac_address=34:40:b5:b9:68:5e
+
+elif [ $sms_name = hpcc-cluster-53 ]
+then
+        mac_address=40:f2:e9:02:5c:fc
+
+elif [ $sms_name = hpcc-cluster-54 ]
+then
+        mac_address=34:40:b5:b9:64:b2
+
+elif [ $sms_name = hpcc-cluster-55 ]
+then
+        mac_address=34:40:b5:b9:65:b4
+
+elif [ $sms_name = hpcc-cluster-56 ]
+then
+        mac_address=34:40:b5:b9:4a:56
+
+elif [ $sms_name = hpcc-cluster-57 ]
+then
+        mac_address=34:40:b5:b9:65:49
+
+elif [ $sms_name = hpcc-cluster-58 ]
+then
+        mac_address=34:40:b5:b9:4a:15
+
+elif [ $sms_name = hpcc-cluster-59 ]
+then
+        mac_address=34:40:b5:b9:56:bd
+
+elif [ $sms_name = hpcc-cluster-60 ]
+then
+        mac_address=34:40:b5:b9:b5:e2
+
+elif [ $sms_name = hpcc-cluster-61 ]
+then
+        mac_address=34:40:b5:b9:57:42
+
+elif [ $sms_name = hpcc-cluster-62 ]
+then
+        mac_address=34:40:b5:b9:57:e9
+
+elif [ $sms_name = hpcc-cluster-63 ]
+then
+        mac_address=34:40:b5:b9:59:9f
+
+elif [ $sms_name = hpcc-cluster-64 ]
+then
+        mac_address=34:40:b5:b9:46:18
 
 fi
 

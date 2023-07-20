@@ -360,9 +360,9 @@ dnf --installroot=$CHROOT config-manager --set-enabled powertools
 
 dnf -y --installroot=$CHROOT install http://repos.openhpc.community/OpenHPC/2/EL_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
 
-dnf --installroot=$CHROOT config-manager --add-repo http://yum.repos.intel.com/hpc-platform/el8/setup/intel-hpc-platform.repo
+# dnf --installroot=$CHROOT config-manager --add-repo http://yum.repos.intel.com/hpc-platform/el8/setup/intel-hpc-platform.repo
 
-rpm --root=$CHROOT --import http://yum.repos.intel.com/hpc-platform/el8/setup/PUBLIC_KEY.PUB
+# rpm --root=$CHROOT --import http://yum.repos.intel.com/hpc-platform/el8/setup/PUBLIC_KEY.PUB
 
 dnf -y --installroot=$CHROOT update
 
@@ -374,7 +374,7 @@ dnf -y --installroot=$CHROOT install apptainer
 
 dnf -y --installroot=$CHROOT install ohpc-base-compute
 
-dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
+# dnf -y --installroot=$CHROOT install "intel-hpc-platform-*"
 
 dnf -y --installroot=$CHROOT install dmidecode parted grub2 numactl chrony
 
@@ -472,10 +472,10 @@ wwctl server restart
 
 ipmitool -H 10.2.2.2 -U USERID -P PASSW0RD chassis power cycle
 
-dnf -y install intel-oneapi-toolkit-release-ohpc
+# dnf -y install intel-oneapi-toolkit-release-ohpc
 
-dnf -y install intel-hpckit
+# dnf -y install intel-hpckit
 
-dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
+# dnf -y install intel-compilers-devel-ohpc intel-mpi-devel-ohpc
 
 date

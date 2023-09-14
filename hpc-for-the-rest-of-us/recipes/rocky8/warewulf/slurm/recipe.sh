@@ -356,8 +356,8 @@ systemctl start tftp.socket
 # -------------------------------------------------
 # Create compute image for Warewulf (Section 3.8.1)
 # -------------------------------------------------
-export CHROOT=/opt/ohpc/admin/images/rocky8.5
-echo "export CHROOT=/opt/ohpc/admin/images/rocky8.5" >> ~/.bashrc
+export CHROOT=/opt/ohpc/admin/images/rocky8.8
+echo "export CHROOT=/opt/ohpc/admin/images/rocky8.8" >> ~/.bashrc
 wwmkchroot -v rocky-8 $CHROOT
 dnf -y --installroot $CHROOT install epel-release
 cp -p /etc/yum.repos.d/OpenHPC*.repo $CHROOT/etc/yum.repos.d

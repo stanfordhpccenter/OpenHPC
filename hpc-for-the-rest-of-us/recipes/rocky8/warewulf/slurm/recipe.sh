@@ -479,7 +479,7 @@ wwsh -y file set network --path /etc/sysconfig/network --mode=0644 --uid=0
 wwsh -y node new compute-1-1 -I 10.10.1.1 -H ${mac_address}
 
 # Add hosts to cluster (Cont.)
-wwsh -y provision set compute-1-1 --vnfs=rocky8.5 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
+wwsh -y provision set compute-1-1 --vnfs=rocky8.8 --bootstrap=`uname -r` --files=dynamic_hosts,passwd,group,shadow,munge.key,network,subuid,subgid
 
 systemctl restart dhcpd
 wwsh pxe update

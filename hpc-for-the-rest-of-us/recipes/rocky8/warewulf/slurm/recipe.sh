@@ -277,6 +277,22 @@ elif [ $sms_name = hpcc-cluster-64 ]
 then
         mac_address=34:40:b5:b9:46:18
 
+elif [ $sms_name = hpcc-cluster-65 ]
+then
+        mac_address=34:40:b5:b9:65:2e
+
+elif [ $sms_name = hpcc-cluster-66 ]
+then
+        mac_address=34:40:b5:b9:65:f3
+
+elif [ $sms_name = hpcc-cluster-67 ]
+then
+        mac_address=34:40:b5:ba:20:0d
+
+elif [ $sms_name = hpcc-cluster-68 ]
+then
+        mac_address=34:40:b5:b9:65:3c
+
 fi
 
 # update hosts file

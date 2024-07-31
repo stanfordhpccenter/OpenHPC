@@ -458,6 +458,9 @@ EOT
 # added for paraview
 yum -y --installroot=$CHROOT install mesa-libGLU
 
+# add python3.11
+yum -y --installroot=$CHROOT install python3.11 python3.11-pip
+
 wwctl container build rocky-8
 
 wwctl node add compute-1-1 -n cluster -I 10.10.1.1 -H ${mac_address}
